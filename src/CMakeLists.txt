@@ -40,6 +40,8 @@ SOURCE_GROUP(${LIB_NAME} FILES ${MASTER_SRC_LIST})
 SET(WINDOW_SRC_LIST
     mainwindow.h
     mainwindow.cpp
+	dbconn.h
+	dbconn.cpp
 	${DO_UIC_LIST}
 )
 SOURCE_GROUP(${LIB_NAME}\\window FILES ${WINDOW_SRC_LIST})
