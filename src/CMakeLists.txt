@@ -34,14 +34,14 @@ SOURCE_GROUP(${LIB_NAME}\\window\\uic FILES ${UIC_OUT_LIST})
 
 SET(MASTER_SRC_LIST
     main.cpp
+    db_layer.h
+    singleton.h
 )
 SOURCE_GROUP(${LIB_NAME} FILES ${MASTER_SRC_LIST})
 
 SET(WINDOW_SRC_LIST
     mainwindow.h
     mainwindow.cpp
-	dbconn.h
-	dbconn.cpp
 	${DO_UIC_LIST}
 )
 SOURCE_GROUP(${LIB_NAME}\\window FILES ${WINDOW_SRC_LIST})
@@ -65,6 +65,7 @@ FOREACH(QT_LIB
   Core
   Gui
   Widgets
+  Sql
 )
     ADD_QT_LIB(${QT_LIB})
 ENDFOREACH()
