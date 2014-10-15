@@ -35,6 +35,7 @@ SOURCE_GROUP(${LIB_NAME}\\window\\uic FILES ${UIC_OUT_LIST})
 SET(MASTER_SRC_LIST
     main.cpp
     db_layer.h
+    db_layer.cpp
     singleton.h
 )
 SOURCE_GROUP(${LIB_NAME} FILES ${MASTER_SRC_LIST})
