@@ -1,13 +1,15 @@
 #include "mainwindow.h"
 #include "db_layer.h"
 
+#include <QtCore/QTextCodec>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMessageBox>
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    
+
     try {
         Database database;
         MainWindow w;
