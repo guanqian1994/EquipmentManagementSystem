@@ -17,7 +17,6 @@ public:
 
 	private slots:
 	void on_loginbtn_clicked();
-
 	void on_resetbtn_clicked();
 
 private:

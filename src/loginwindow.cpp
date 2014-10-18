@@ -27,25 +27,23 @@ void loginwindow::on_loginbtn_clicked()
 	}
 	if (Database::get().login(user,password))
 	{
-		QMessageBox msg;
-		msg.setText("µÇÂ¼³É¹¦£¡");
 		this->hide();
+		QMessageBox::information(this, tr("Login"), tr("Login sucessed!"), QMessageBox::Ok);
 		MainWindow *w = new MainWindow();
 		w->show();
 
 	}
 	else
 	{
-		QMessageBox msg;
-		msg.setText("¶Ô²»Æð£¬µÇÂ¼Ê§°Ü£¬ÇëÖØÐÂµÇÂ¼Ð»Ð»£¡");
-		user.clear();
-		password.clear();
+		QMessageBox::information(this, tr("Login"), tr("Login failed~~"), QMessageBox::Ok);
+		ui->user->clear();
+		ui->password->clear();
 	}
 	
 }
 
 void loginwindow::on_resetbtn_clicked()
 {
-	ui->user->text().clear();
-	ui->password->text().clear();
+	ui->user->clear();
+	ui->password->clear();
 }
