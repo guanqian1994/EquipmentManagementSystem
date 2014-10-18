@@ -8,10 +8,12 @@ SET(LIB_NAME EquipmentManagementSystem)
 
 SET(DO_MOC_HEADER_LIST
     mainwindow.h
+	loginwindow.h
 )
 
 SET(DO_UIC_LIST
     mainwindow.ui
+	loginwindow.ui
 )
 
 SET(MOC_OUT_LIST)
@@ -43,6 +45,9 @@ SOURCE_GROUP(${LIB_NAME} FILES ${MASTER_SRC_LIST})
 SET(WINDOW_SRC_LIST
     mainwindow.h
     mainwindow.cpp
+    loginwindow.h
+    loginwindow.cpp
+	
 	${DO_UIC_LIST}
 )
 SOURCE_GROUP(${LIB_NAME}\\window FILES ${WINDOW_SRC_LIST})

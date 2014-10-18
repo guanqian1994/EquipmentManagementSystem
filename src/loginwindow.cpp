@@ -1,59 +1,51 @@
 #include "loginwindow.h"
-#include <QMessageBox>
-#include <QDebug>
-#include <stdlib.h>
-#include <Windows.h>
+#include "ui_loginwindow.h"
+#include "QtWidgets\qmessagebox.h"
+#include "mainwindow.h"
+#include "db_layer.h"
 
-Logic::Logic(QWidget *parent) :
-QWidget(parent),
-ui(new Ui::Logic)
+loginwindow::loginwindow(QWidget *parent) :
+QDialog(parent),
+ui(new Ui::loginwindow)
 {
 	ui->setupUi(this);
-	QPalette palette;
-	palette.setBrush(QPalette::Background, QBrush(QPixmap("3.jpg")));
-	this->setPalette(palette);
 }
 
-Logic::~Logic()
+loginwindow::~loginwindow()
 {
 	delete ui;
 }
 
-void Logic::on_pushButton_enter_clicked()
+void loginwindow::on_loginbtn_clicked()
 {
-	if (ui->lineEdit_pwd->text().isEmpty() || ui->lineEdit_pwd->text().isEmpty())
+	user = ui->user->text();
+	password = ui->password->text();
+	if (user.isEmpty() || password.isEmpty())
 	{
-		QMessageBox::information(this, tr("warn"), tr("Please enter your whole information!"), QMessageBox::Ok);
+		QMessageBox::information(this, tr("Error"), tr("user or password is null,please write down again!"), QMessageBox::Ok);
 		return;
 	}
-	user = ui->lineEdit_user->text();
-	pwd = ui->lineEdit_pwd->text();
-	QString correctuser = "10011006";
-	QString correctpwd = "0";
-	qDebug() << correctuser << correctpwd;
-	if (user == correctuser && pwd == correctpwd)
+	if (Database::get().login(user,password))
 	{
+		QMessageBox msg;
+		msg.setText("µÇÂ¼³É¹¦£¡");
 		this->hide();
-		//sleep(100);
 		MainWindow *w = new MainWindow();
 		w->show();
 
 	}
 	else
 	{
-		QMessageBox::warning(this, tr("warn"), tr("Please check your user and password!"), QMessageBox::Ok);
-		ui->lineEdit_user->clear();
-		ui->lineEdit_pwd->clear();
+		QMessageBox msg;
+		msg.setText("¶Ô²»Æð£¬µÇÂ¼Ê§°Ü£¬ÇëÖØÐÂµÇÂ¼Ð»Ð»£¡");
+		user.clear();
+		password.clear();
 	}
+	
 }
 
-void Logic::on_pushButton_cancel_clicked()
+void loginwindow::on_resetbtn_clicked()
 {
-	ui->lineEdit_user->clear();
-	ui->lineEdit_pwd->clear();
-}
-
-void Logic::on_pushButton_out_clicked()
-{
-	this->close();
+	ui->user->text().clear();
+	ui->password->text().clear();
 }

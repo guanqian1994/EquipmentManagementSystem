@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "loginwindow.h"
 #include "db_layer.h"
 
 #include <QtCore/QTextCodec>
@@ -12,8 +13,8 @@ int main(int argc, char *argv[])
 
     try {
         Database database;
-        MainWindow w;
-        w.show();
+        loginwindow l;
+        l.show();
         return a.exec();
     } catch (std::exception& e) {
         QMessageBox::information(NULL, "Error", e.what(), QMessageBox::Yes, QMessageBox::Yes);

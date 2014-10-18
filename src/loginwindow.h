@@ -1,21 +1,19 @@
-#ifndef LOGIN_H
-#define LOGIN_H
+#ifndef LOGINWINDOW_H
+#define LOGICWINDOW_H
 
-#include <QtWidgets\qwidget.h>
-#include <QtCore\qstring.h>
-#include "mainwindow.h"
+#include <QtWidgets\qdialog.h>
 
 namespace Ui {
-	class login;
+	class loginwindow;
 }
 
-class login : public QWidget
+class loginwindow : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit login(QWidget *parent = 0);
-	~login();
+	explicit loginwindow(QWidget *parent = 0);
+	~loginwindow();
 
 	private slots:
 	void on_loginbtn_clicked();
@@ -23,10 +21,9 @@ public:
 	void on_resetbtn_clicked();
 
 private:
-	Ui::login *ui;
+	Ui::loginwindow *ui;
 	QString user;
-	QString pwd;
+	QString password;
 };
 
-
-#endif
+#endif 
