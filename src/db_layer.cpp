@@ -110,7 +110,7 @@ QSqlError Database::checkTables()
             CREATE TABLE t_user
             ( 
                 name VARCHAR(64) PRIMARY KEY NOT NULL,
-                pwd VARCHAR(64),
+                pwd VARCHAR(64)
             );)"))
         {
             return query.lastError();
