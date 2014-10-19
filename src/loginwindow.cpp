@@ -9,6 +9,8 @@ QDialog(parent),
 ui(new Ui::loginwindow)
 {
 	ui->setupUi(this);
+	ui->password->setEchoMode(QLineEdit::Password);
+
 }
 
 loginwindow::~loginwindow()

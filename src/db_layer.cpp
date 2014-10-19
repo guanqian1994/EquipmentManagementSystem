@@ -29,7 +29,7 @@ Database::Database(const QString& schemaName,
         throw std::logic_error(error.text().toStdString());
     }
 
-    PRINTERROR(login("admin", "123456"), QMessageBox::tr("Failed to login."));
+    PRINTERROR(login("admin", "123456"), QMessageBox::tr("Failed to login!"));
 
     registration(
     {0, "name", 

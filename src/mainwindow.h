@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QtWidgets/QMainWindow>
+#include <QtCore\qstringlist.h>
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+	QStringList list;
 };
 
 #endif // MAINWINDOW_H
