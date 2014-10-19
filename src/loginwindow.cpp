@@ -1,6 +1,6 @@
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
-#include "QtWidgets\qmessagebox.h"
+#include "QtWidgets/QMessagebox"
 #include "mainwindow.h"
 #include "db_layer.h"
 

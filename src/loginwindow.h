@@ -1,7 +1,7 @@
 #ifndef LOGINWINDOW_H
 #define LOGICWINDOW_H
 
-#include <QtWidgets\qdialog.h>
+#include <QtWidgets/QDialog>
 
 namespace Ui {
 	class loginwindow;

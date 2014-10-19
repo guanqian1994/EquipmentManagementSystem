@@ -88,10 +88,10 @@ bool Database::registration(const EquipmentData& equipment)
     query.addBindValue(equipment._description);
     query.addBindValue(equipment._registrationDate);
     query.addBindValue(_currentUser);
-    query.addBindValue(equipment._value);
-    query.addBindValue(equipment._lendPrice);
+    query.addBindValue((int)equipment._value);
+    query.addBindValue((int)equipment._lendPrice);
     query.addBindValue(equipment._isLending ? "Y" : "N");
-    query.addBindValue(equipment._recentLendRecord);
+    query.addBindValue((int)equipment._recentLendRecord);
     query.addBindValue(QByteArray());
     query.addBindValue(equipment._remark);
 
