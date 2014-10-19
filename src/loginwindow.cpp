@@ -39,7 +39,6 @@ void loginwindow::on_loginbtn_clicked()
 		ui->user->clear();
 		ui->password->clear();
 	}
-	
 }
 
 void loginwindow::on_resetbtn_clicked()
