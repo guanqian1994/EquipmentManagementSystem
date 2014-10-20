@@ -9,8 +9,7 @@ Database::Database(const QString& schemaName,
                    const QString& userName,
                    const QString& password,
                    const QString& hostName)
-    : _database(QSqlDatabase::addDatabase("QMYSQL", "em_sys")),
-    _schemaName(schemaName)
+    : _schemaName(schemaName), _database(QSqlDatabase::addDatabase("QMYSQL", "em_sys"))
 {
     _database.setHostName(hostName);
     _database.setDatabaseName(schemaName);
@@ -37,6 +36,10 @@ Database::Database(const QString& schemaName,
     "2014-10-18", 
     "registrationOperator",
     0, 0, false, 0, QImage(), "" });
+    
+    getEquipmentList(0, 1000);
+    
+    //std::cout<< x <<std::endl;
 }
 
 Database::~Database()
@@ -64,6 +67,47 @@ bool Database::login(const QString& user, const QString& password)
     return false;
 }
 
+std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len)
+{
+    std::vector<EquipmentData> result;
+    
+    QSqlQuery query(_database);
+    
+    query.prepare(R"(SELECT * FROM t_equipment LIMIT ?, ?)");
+    
+    query.addBindValue(pos);
+    query.addBindValue(len);
+    
+    PRINTERROR(query.exec(), query.lastError().text());
+    
+    while (query.next()) {
+        result.push_back({
+            query.value(0).toUInt(),
+            query.value(1).toString(),
+            query.value(2).toString(),
+            query.value(3).toString(),
+            query.value(4).toString(),
+            query.value(5).toUInt(),
+            query.value(6).toUInt(),
+            query.value(7).toBool(),
+            query.value(8).toBool(),
+            QImage(),
+            query.value(10).toString()
+        });
+    }
+    
+    return std::move(result);
+}
+
+std::size_t Database::getEquipmentCount() const
+{
+    QSqlQuery query(_database);
+    
+    PRINTERROR(query.exec("SELECT * FROM t_equipment;"), query.lastError().text());
+    
+    return query.size();
+}
+
 bool Database::registration(const EquipmentData& equipment)
 {
     if (_currentUser.isEmpty())
@@ -88,10 +132,10 @@ bool Database::registration(const EquipmentData& equipment)
     query.addBindValue(equipment._description);
     query.addBindValue(equipment._registrationDate);
     query.addBindValue(_currentUser);
-    query.addBindValue((int)equipment._value);
-    query.addBindValue((int)equipment._lendPrice);
+    query.addBindValue(equipment._value);
+    query.addBindValue(equipment._lendPrice);
     query.addBindValue(equipment._isLending ? "Y" : "N");
-    query.addBindValue((int)equipment._recentLendRecord);
+    query.addBindValue(equipment._recentLendRecord);
     query.addBindValue(QByteArray());
     query.addBindValue(equipment._remark);
 

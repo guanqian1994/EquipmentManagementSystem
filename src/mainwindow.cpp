@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QtCore\qtextcodec.h>
+#include <QtCore/Qtextcodec>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -10,11 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	
 	//TableWiget
 	ui->tableWidget->setColumnCount(10);
-	list << "�豸����" << "SHEBEIMIAOSHU" << "DENGJIRIQI" << "DENGJICAOZUOYUAN" << "JIAZHI" << "CHUZUJIAGE" << "SHEBEIZHUANGTAI" << "ZUIJINYICIJIECHUJIELU" << "SHEBEITUPIAN" << "BEIZHU";
+	list << "…Ë±∏√˚≥∆" << "SHEBEIMIAOSHU" << "DENGJIRIQI" << "DENGJICAOZUOYUAN" << "JIAZHI" << "CHUZUJIAGE" << "SHEBEIZHUANGTAI" << "ZUIJINYICIJIECHUJIELU" << "SHEBEITUPIAN" << "BEIZHU";
 	ui->tableWidget->setHorizontalHeaderLabels(list);
 	ui->tableWidget->horizontalHeader()->setStretchLastSection(10);
 	/*
-	//����ÿ�еĿ���
+	//…Ë÷√√ø¡–µƒøÌ∂»
 	for (int i=0; i <= ui->tableWidget->rowCount(); i++)
 		ui->tableWidget->setColumnWidth(i, 200);
 		*/

@@ -1,5 +1,5 @@
-#ifndef LOGINWINDOW_H
-#define LOGICWINDOW_H
+#ifndef _LOGINWINDOW_H
+#define _LOGINWINDOW_H
 
 #include <QtWidgets/QDialog>
 

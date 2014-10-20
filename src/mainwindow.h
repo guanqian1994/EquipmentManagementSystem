@@ -1,8 +1,8 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef _MAINWINDOW_H
+#define _MAINWINDOW_H
 
 #include <QtWidgets/QMainWindow>
-#include <QtCore\qstringlist.h>
+#include <QtCore/Qstringlist>
 
 namespace Ui {
 class MainWindow;
