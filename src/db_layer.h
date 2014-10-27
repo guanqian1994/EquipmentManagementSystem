@@ -53,6 +53,7 @@ public:
 
     std::vector<EquipmentData> searchEquipment(const QString& name);
     std::vector<EquipmentData> getEquipmentList(uint pos, uint len);
+    bool updateEquipment(const EquipmentData& equipment);
     std::size_t getEquipmentCount() const;
     bool registration(const EquipmentData& equipment);
     std::vector<EquipmentData> getLendList;

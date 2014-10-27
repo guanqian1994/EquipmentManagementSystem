@@ -23,12 +23,12 @@ Database::Database(const QString& schemaName,
 
     QSqlError error = checkTables();
 
+    login("admin", "123456");
+    
     if (error.isValid())
     {
         throw std::logic_error(error.text().toStdString());
     }
-
-    PRINTERROR(login("admin", "123456"), QMessageBox::tr("Failed to login!"));
 
     registration(
     {0, "name", 
@@ -37,7 +37,11 @@ Database::Database(const QString& schemaName,
     "registrationOperator",
     0, 0, false, 0, QImage(), "" });
     
-    getEquipmentList(0, 1000);
+    auto lst = getEquipmentList(0, 1000);
+    
+    auto v = lst.front();
+    v._name = "干你妈";
+    updateEquipment(v);
     
     //std::cout<< x <<std::endl;
 }
@@ -69,6 +73,9 @@ bool Database::login(const QString& user, const QString& password)
 
 std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len)
 {
+    if (_currentUser.isEmpty())
+        return {};
+    
     std::vector<EquipmentData> result;
     
     QSqlQuery query(_database);
@@ -90,7 +97,7 @@ std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len)
             query.value(5).toUInt(),
             query.value(6).toUInt(),
             query.value(7).toBool(),
-            query.value(8).toBool(),
+            query.value(8).toUInt(),
             QImage(),
             query.value(10).toString()
         });
@@ -99,8 +106,49 @@ std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len)
     return std::move(result);
 }
 
+bool Database::updateEquipment(const EquipmentData& equipment)
+{
+    if (_currentUser.isEmpty())
+        return false;
+    
+    QSqlQuery query(_database);
+    
+    query.prepare(R"(UPDATE t_equipment SET
+                  name = ?,
+                  description = ?,
+                  registration_date = ?,
+                  registration_operator = ?,
+                  value = ?,
+                  lendPrice = ?,
+                  is_lending = ?,
+                  recent_lend_record = ?,
+                  image = ?,
+                  remark = ?
+                  WHERE id = ?)");
+    
+    query.addBindValue(equipment._name);
+    query.addBindValue(equipment._description);
+    query.addBindValue(equipment._registrationDate);
+    query.addBindValue(_currentUser);
+    query.addBindValue(equipment._value);
+    query.addBindValue(equipment._lendPrice);
+    query.addBindValue(equipment._isLending ? "Y" : "N");
+    query.addBindValue(equipment._recentLendRecord);
+    query.addBindValue(QByteArray());
+    query.addBindValue(equipment._remark);
+    query.addBindValue(equipment._id);
+    
+    PRINTERROR(query.exec(), query.lastError().text());
+    
+    return true;
+
+}
+
 std::size_t Database::getEquipmentCount() const
 {
+    if (_currentUser.isEmpty())
+        return 0;
+    
     QSqlQuery query(_database);
     
     PRINTERROR(query.exec("SELECT * FROM t_equipment;"), query.lastError().text());
@@ -160,7 +208,7 @@ QSqlError Database::checkTables()
             return query.lastError();
         }
 
-        query.exec(R"(INSERT INTO t_user VALUES("admin", "123456"))");
+        query.exec(R"(SET names gbk; INSERT INTO t_user VALUES("admin", "123456"))");
 
     }
 
