@@ -40,7 +40,7 @@ Database::Database(const QString& schemaName,
     auto lst = getEquipmentList(0, 1000);
     
     auto v = lst.front();
-    v._name = "干你妈";
+    v._name = ".";
     updateEquipment(v);
     
     //std::cout<< x <<std::endl;
@@ -88,7 +88,7 @@ std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len)
     PRINTERROR(query.exec(), query.lastError().text());
     
     while (query.next()) {
-        result.push_back({
+        EquipmentData d = {
             query.value(0).toUInt(),
             query.value(1).toString(),
             query.value(2).toString(),
@@ -100,7 +100,8 @@ std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len)
             query.value(8).toUInt(),
             QImage(),
             query.value(10).toString()
-        });
+        };
+        result.push_back(d);
     }
     
     return std::move(result);
