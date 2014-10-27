@@ -35,14 +35,11 @@ Database::Database(const QString& schemaName,
     "description", 
     "2014-10-18", 
     "registrationOperator",
-    0, 0, false, 0, QImage(), "" });
-    
-    auto lst = getEquipmentList(0, 1000);
-    
+    0, 0, false, 0, QImage(), "" }); 
+    auto lst = getEquipmentList(0, 1000);    
     auto v = lst.front();
-    v._name = "干你妈";
-    updateEquipment(v);
-    
+	v._name = "nima";
+	updateEquipment(v);
     //std::cout<< x <<std::endl;
 }
 
@@ -101,9 +98,8 @@ std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len)
             QImage(),
             query.value(10).toString()
         });
-    }
-    
-    return std::move(result);
+	}
+	return std::move(result);
 }
 
 bool Database::updateEquipment(const EquipmentData& equipment)
@@ -113,7 +109,7 @@ bool Database::updateEquipment(const EquipmentData& equipment)
     
     QSqlQuery query(_database);
     
-    query.prepare(R"(UPDATE t_equipment SET
+	query.prepare(R"(UPDATE t_equipment SET
                   name = ?,
                   description = ?,
                   registration_date = ?,
@@ -124,7 +120,7 @@ bool Database::updateEquipment(const EquipmentData& equipment)
                   recent_lend_record = ?,
                   image = ?,
                   remark = ?
-                  WHERE id = ?)");
+                  WHERE id = ?;)");
     
     query.addBindValue(equipment._name);
     query.addBindValue(equipment._description);
@@ -141,7 +137,6 @@ bool Database::updateEquipment(const EquipmentData& equipment)
     PRINTERROR(query.exec(), query.lastError().text());
     
     return true;
-
 }
 
 std::size_t Database::getEquipmentCount() const

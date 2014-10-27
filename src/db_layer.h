@@ -12,31 +12,30 @@
 #include <QtGui/QImage>
 #include "singleton.h"
 
-/// …Ë±∏–≈œ¢
 struct EquipmentData
 {
     uint        _id;
-    QString     _name;              /// …Ë±∏√˚≥∆
-    QString     _description;       /// …Ë±∏√Ë ˆ
-    QString     _registrationDate;  /// µ«º«»’∆⁄
-    QString     _registrationOperator;/// µ«º«≤Ÿ◊˜‘±£®µ±«∞”√ªß£©
-    uint        _value;             /// º€÷µ
-    uint        _lendPrice;         /// ≥ˆ◊‚º€∏Ò£®Ω®“È£©
-    bool        _isLending;         ///  «∑Ò’˝‘⁄ΩË≥ˆ◊¥Ã¨
-    uint        _recentLendRecord;  /// ◊ÓΩ¸“ª¥ŒΩË≥ˆº«¬º
-    QImage      _image;             /// …Ë±∏Õº∆¨
-    QString     _remark;            ///±∏◊¢
+    QString     _name;             
+    QString     _description;       
+    QString     _registrationDate;  
+    QString     _registrationOperator;
+    uint        _value;            
+    uint        _lendPrice;       
+    bool        _isLending;        
+    uint        _recentLendRecord;
+    QImage      _image;            
+    QString     _remark;           
 };
 
-/// ΩË≥ˆ£®πÈªπ£©º«¬º
+
 struct LendRecord
 {
     uint        _id;
-    bool        _isLend;            ///  «∑Ò «ΩË≥ˆµƒº«¬º
-    QString     _operator;          /// µ«º«≤Ÿ◊˜‘±£®µ±«∞”√ªß£©
-    QString     _date;              /// »’∆⁄
-    uint        _receivables;       ///  ’øÓ
-    QString     _remark;            /// ±∏◊¢
+    bool        _isLend;            
+    QString     _operator;          
+    QString     _date;              
+    uint        _receivables;      
+    QString     _remark;           
 };
 
 class Database : public Singleton<Database>
