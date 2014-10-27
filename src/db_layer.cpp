@@ -103,7 +103,7 @@ std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len)
         };
         result.push_back(d);
     }
-    
+
     return std::move(result);
 }
 
