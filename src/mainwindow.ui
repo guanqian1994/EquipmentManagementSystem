@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="all">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -37,7 +37,7 @@
      <string>设备库存</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="record">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -50,7 +50,7 @@
      <string>设备记录</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="exit">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -63,7 +63,7 @@
      <string>退出</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="insert">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -73,10 +73,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>设备采购与销毁</string>
+     <string>设备采购</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="lend">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -89,7 +89,7 @@
      <string>设备借用</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="return_2">
     <property name="geometry">
      <rect>
       <x>50</x>

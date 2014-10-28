@@ -11,6 +11,7 @@ SET(DO_MOC_HEADER_LIST
 	loginwindow.h
 	lendwindow.h
 	returnwindow.h
+	insertwindow.h
 )
 
 SET(DO_UIC_LIST
@@ -18,6 +19,7 @@ SET(DO_UIC_LIST
 	loginwindow.ui
 	lendwindow.ui
 	returnwindow.ui
+	insertwindow.ui
 )
 
 SET(MOC_OUT_LIST)
@@ -55,6 +57,8 @@ SET(WINDOW_SRC_LIST
 	lendwindow.cpp
 	returnwindow.h
 	returnwindow.cpp
+	insertwindow.h
+	insertwindow.cpp
 
 	${DO_UIC_LIST}
 )

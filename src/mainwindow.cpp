@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QtCore/Qtextcodec>
 #include "db_layer.h"
+#include "insertwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -42,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	
 	for (int i = 0; i <Database::get().getEquipmentCount(); i++)
 	{
-		for (auto& a : Database::get().getEquipmentList(0, 1000))
+		for (auto& a : li)
 		{
 			ui->tableWidget->setItem(i, 0, new QTableWidgetItem(a._id));
 			ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._name));
@@ -63,3 +64,48 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+void MainWindow::on_all_clicked()
+{
+	auto li = Database::get().getEquipmentList(0, 1000);
+	ui->tableWidget->setRowCount(li.size());
+	for (int i = 0; i <Database::get().getEquipmentCount(); i++)
+	{
+		for (auto& a : li)
+		{
+			ui->tableWidget->setItem(i, 0, new QTableWidgetItem(a._id));
+			ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._name));
+			ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._description));
+			ui->tableWidget->setItem(i, 3, new QTableWidgetItem(a._registrationDate));
+			ui->tableWidget->setItem(i, 4, new QTableWidgetItem(a._registrationOperator));
+			ui->tableWidget->setItem(i, 5, new QTableWidgetItem(a._value));
+			ui->tableWidget->setItem(i, 6, new QTableWidgetItem(a._lendPrice));
+			ui->tableWidget->setItem(i, 7, new QTableWidgetItem(a._isLending));
+			ui->tableWidget->setItem(i, 8, new QTableWidgetItem(a._recentLendRecord));
+			ui->tableWidget->setItem(i, 8, new QTableWidgetItem(QIcon(""), ""));
+			ui->tableWidget->setItem(0, 10, new QTableWidgetItem(a._remark));
+		}
+	}
+}
+void MainWindow::on_exit_clicked()
+{
+
+}
+void MainWindow::on_lend_clicked()
+{
+
+}
+void MainWindow::on_record_clicked()
+{
+
+}
+void MainWindow::on_return_clicked()
+{
+
+}
+void MainWindow::on_insert_clicked()
+{
+	insertwindow *insert = new insertwindow();
+	insert->show();
+}
+
+
