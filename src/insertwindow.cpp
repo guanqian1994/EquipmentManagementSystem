@@ -31,7 +31,7 @@ void insertwindow::on_ok_clicked()
 	QString value = ui->lineEdit_4->text();
 	QString lendPrice = ui->lineEdit_5->text();
 	QString remark = ui->textEdit->toPlainText();
-	Database::get().registration({ 0, name, description, "2010-2-2", registrationOperator, value.toInt(), lendPrice.toInt(), false, 0, QImage(), remark });
+	Database::get().registration({ 0, name, description, "2010-2-2", registrationOperator, value.toUInt(), lendPrice.toUInt(), false, 0, QImage(), remark });
 	/*if (Database::get().registration==false)
 		QMessageBox::information(this, tr("Error"), tr("≤Â»Î ß∞‹!"), QMessageBox::Ok);*/
 

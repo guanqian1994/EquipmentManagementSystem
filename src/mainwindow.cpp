@@ -1,8 +1,11 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+
+#include <cstdio>
 #include <QtCore/Qtextcodec>
+#include "ui_mainwindow.h"
 #include "db_layer.h"
 #include "insertwindow.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -40,24 +43,25 @@ MainWindow::MainWindow(QWidget *parent) :
 		ui->tableWidget->setItem(0, 10, new QTableWidgetItem(li[0]._remark));
 	}
 	*/
-	
-	for (int i = 0; i <Database::get().getEquipmentCount(); i++)
-	{
+    int i = 0;
+
 		for (auto& a : li)
 		{
-			ui->tableWidget->setItem(i, 0, new QTableWidgetItem(a._id));
+            std::snprintf(_buff, BUFF_SIZE, "%d", a._id);
+			ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString((const char*)_buff)));
 			ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._name));
 			ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._description));
 			ui->tableWidget->setItem(i, 3, new QTableWidgetItem(a._registrationDate));
 			ui->tableWidget->setItem(i, 4, new QTableWidgetItem(a._registrationOperator));
 			ui->tableWidget->setItem(i, 5, new QTableWidgetItem(a._value));
 			ui->tableWidget->setItem(i, 6, new QTableWidgetItem(a._lendPrice));
-			ui->tableWidget->setItem(i, 7, new QTableWidgetItem(a._isLending));
+            ui->tableWidget->setItem(i, 7, new QTableWidgetItem(a._isLending ? "Y" : "N"));
 			ui->tableWidget->setItem(i, 8, new QTableWidgetItem(a._recentLendRecord));
 			ui->tableWidget->setItem(i, 8, new QTableWidgetItem(QIcon(""), ""));
 			ui->tableWidget->setItem(0, 10, new QTableWidgetItem(a._remark));
+            i++;
 		}
-	}
+
 }
 
 MainWindow::~MainWindow()

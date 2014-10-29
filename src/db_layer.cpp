@@ -50,8 +50,8 @@ Database::Database(const QString& schemaName,
     v._name = ".";
     updateEquipment(v);
 	*/
->>>>>>> FETCH_HEAD
-    
+
+    auto lst = getEquipmentList(0, 1000);
     //std::cout<< x <<std::endl;
 }
 

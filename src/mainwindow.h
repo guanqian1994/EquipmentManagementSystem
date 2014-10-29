@@ -4,6 +4,8 @@
 #include <QtWidgets/QMainWindow>
 #include <QtCore/Qstringlist>
 
+#define BUFF_SIZE 24
+
 namespace Ui {
 class MainWindow;
 }
@@ -23,10 +25,10 @@ public:
 	void on_exit_clicked();
 	void on_insert_clicked();
 
-
 private:
     Ui::MainWindow *ui;
 	QStringList list;
+    char _buff[BUFF_SIZE];
 };
 
 #endif // MAINWINDOW_H
