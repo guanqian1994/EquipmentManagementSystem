@@ -32,7 +32,9 @@ Database::Database(const QString& schemaName,
         throw std::logic_error(error.text().toStdString());
     }
 
-    registration(
+   /* 
+   //≤‚ ‘
+   registration(
     {0, "name", 
     "description", 
     "",
@@ -41,8 +43,14 @@ Database::Database(const QString& schemaName,
     
     auto lst = getEquipmentList(0, 1000);
     auto v = lst.front();
+<<<<<<< HEAD
     
     lend(v, 1000);
+=======
+    v._name = ".";
+    updateEquipment(v);
+	*/
+>>>>>>> FETCH_HEAD
     
     //std::cout<< x <<std::endl;
 }
