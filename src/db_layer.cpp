@@ -1,4 +1,6 @@
 #include "db_layer.h"
+
+#include <ctime>
 #include <exception>
 #include <QtWidgets/QMessageBox>
 
@@ -33,15 +35,14 @@ Database::Database(const QString& schemaName,
     registration(
     {0, "name", 
     "description", 
-    "2014-10-18", 
+    "",
     "registrationOperator",
     0, 0, false, 0, QImage(), "" });
     
     auto lst = getEquipmentList(0, 1000);
-    
     auto v = lst.front();
-    v._name = ".";
-    updateEquipment(v);
+    
+    lend(v, 1000);
     
     //std::cout<< x <<std::endl;
 }
@@ -179,7 +180,12 @@ bool Database::registration(const EquipmentData& equipment)
 
     query.addBindValue(equipment._name);
     query.addBindValue(equipment._description);
-    query.addBindValue(equipment._registrationDate);
+    // get current date str
+    std::time_t t = std::time(NULL);
+    char mbstr[24];
+    std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d", std::localtime(&t));
+    
+    query.addBindValue((const char*)mbstr);
     query.addBindValue(_currentUser);
     query.addBindValue(equipment._value);
     query.addBindValue(equipment._lendPrice);
@@ -190,6 +196,67 @@ bool Database::registration(const EquipmentData& equipment)
 
     PRINTERROR(query.exec(), query.lastError().text());
 
+    return true;
+}
+
+bool Database::lend(EquipmentData& equipment, uint receivables, QString remark)
+{
+    if (_currentUser.isEmpty())
+        return false;
+    
+    QSqlQuery query(_database);
+    
+    query.prepare(R"(SELECT * FROM t_equipment WHERE id = ?)");
+    query.addBindValue(equipment._id);
+    query.exec();
+    
+    if (query.next() == false)
+        return false;
+    
+    if (query.value("is_lending").toString() == "Y")
+    {
+        equipment._isLending = true;
+        return false;
+    }
+    
+    
+    
+    
+    query.prepare(R"(INSERT INTO t_record(
+                  equipment_id,
+                  is_lend,
+                  operator,
+                  record_date,
+                  receivables,
+                  remark)
+    VALUES(?, ?, ?, ?, ?, ?);)");
+    
+    query.addBindValue(equipment._id);
+    query.addBindValue("Y");
+    query.addBindValue(_currentUser);
+    
+    // get current date str
+    std::time_t t = std::time(NULL);
+    char mbstr[24];
+    std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d", std::localtime(&t));
+    
+    query.addBindValue((const char*)mbstr);
+    query.addBindValue(receivables);
+    query.addBindValue(remark);
+    
+    PRINTERROR(query.exec(), query.lastError().text());
+    
+    
+    query.prepare(R"(UPDATE t_equipment SET
+                  is_lending = ?
+                  WHERE id = ?)");
+    
+    query.addBindValue("Y");
+    query.addBindValue(equipment._id);
+    query.exec();
+    
+    equipment._isLending = true;
+    
     return true;
 }
 
@@ -241,12 +308,13 @@ QSqlError Database::checkTables()
             CREATE TABLE t_record
             ( 
                 id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+                equipment_id INT NOT NULL,
                 is_lend SET("Y", "N") NOT NULL,
                 operator VARCHAR(64) NOT NULL,
                 record_date DATE NOT NULL,
                 receivables INT NOT NULL,
                 remark VARCHAR(128)
-            );)"))
+            ); ALTER TABLE t_record ADD CONSTRAINT FK_RECORD_EQUIPMENT_ID FOREIGN KEY(equipment_id) REFERENCES t_equipment(id);)"))
         {
             return query.lastError();
         }

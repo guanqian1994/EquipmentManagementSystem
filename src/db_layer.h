@@ -32,6 +32,7 @@ struct EquipmentData
 struct LendRecord
 {
     uint        _id;
+    uint        _equipment_id;
     bool        _isLend;            /// 是否是借出的记录
     QString     _operator;          /// 登记操作员（当前用户）
     QString     _date;              /// 日期
@@ -56,9 +57,8 @@ public:
     bool updateEquipment(const EquipmentData& equipment);
     bool registration(const EquipmentData& equipment);
     std::size_t getEquipmentCount() const;
-    std::vector<EquipmentData> getLendList;
-    std::vector<EquipmentData> getLendRecord;
-    bool lend(const EquipmentData& equipment);
+    std::vector<LendRecord> getLendRecordList;
+    bool lend(EquipmentData& equipment, uint receivables, QString remark = "");
     bool refund(const EquipmentData& equipment);
 
 private:
