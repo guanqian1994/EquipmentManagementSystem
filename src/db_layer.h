@@ -15,15 +15,15 @@
 /// 设备信息
 struct EquipmentData
 {
-    std::size_t _id;
+    uint        _id;
     QString     _name;              /// 设备名称
     QString     _description;       /// 设备描述
     QString     _registrationDate;  /// 登记日期
     QString     _registrationOperator;/// 登记操作员（当前用户）
-    std::size_t _value;             /// 价值
-    std::size_t _lendPrice;         /// 出租价格（建议）
+    uint        _value;             /// 价值
+    uint        _lendPrice;         /// 出租价格（建议）
     bool        _isLending;         /// 是否正在借出状态
-    std::size_t _recentLendRecord;  /// 最近一次借出记录
+    uint        _recentLendRecord;  /// 最近一次借出记录
     QImage      _image;             /// 设备图片
     QString     _remark;            ///备注
 };
@@ -31,11 +31,11 @@ struct EquipmentData
 /// 借出（归还）记录
 struct LendRecord
 {
-    std::size_t _id;
+    uint        _id;
     bool        _isLend;            /// 是否是借出的记录
     QString     _operator;          /// 登记操作员（当前用户）
     QString     _date;              /// 日期
-    std::size_t _receivables;       /// 收款
+    uint        _receivables;       /// 收款
     QString     _remark;            /// 备注
 };
 
@@ -55,7 +55,7 @@ public:
     std::vector<EquipmentData> getEquipmentList(uint pos, uint len);
     bool updateEquipment(const EquipmentData& equipment);
     bool registration(const EquipmentData& equipment);
-    std::size_t Database::getEquipmentCount() const;
+    std::size_t getEquipmentCount() const;
     std::vector<EquipmentData> getLendList;
     std::vector<EquipmentData> getLendRecord;
     bool lend(const EquipmentData& equipment);
