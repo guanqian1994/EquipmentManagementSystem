@@ -4,8 +4,8 @@
 #include "mainwindow.h"
 #include "db_layer.h"
 
-#include<QtCore\qstring.h>
-#include<QtWidgets\qfiledialog.h>
+#include <QtCore/QString>
+#include <QtWidgets/QFiledialog>
 
 insertwindow::insertwindow(QWidget *parent) :
 QDialog(parent),
