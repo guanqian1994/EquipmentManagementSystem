@@ -7,12 +7,15 @@
 #include <QtCore/QString>
 #include <QtWidgets/QFiledialog>
 #include <QtCore/QBuffer>
+#include <QtWidgets/QDatetimeedit>
 
 insertwindow::insertwindow(QWidget *parent) :
 QDialog(parent),
 ui(new Ui::insertwindow)
 {
 	ui->setupUi(this);
+	ui->dateEdit->setDateTime(QDateTime::currentDateTime());
+	ui->dateEdit->setReadOnly(true);
 	
 }
 insertwindow::~insertwindow()
@@ -32,9 +35,8 @@ void insertwindow::on_ok_clicked()
 	QString lendPrice = ui->lineEdit_5->text();
 	QString remark = ui->textEdit->toPlainText();
 	Database::get().registration({ 0, name, description, "2010-2-2", registrationOperator, value.toUInt(), lendPrice.toUInt(), false, 0, QImage(), remark });
-	/*if (Database::get().registration==false)
-		QMessageBox::information(this, tr("Error"), tr("插入失败!"), QMessageBox::Ok);*/
-
+	QMessageBox::information(this, tr("提示"), tr("插入成功!"), QMessageBox::Ok);
+	this->close();
 }
 void insertwindow::on_exit_clicked()
 {
