@@ -9,10 +9,12 @@ QDialog(parent),
 ui(new Ui::returnwindow)
 {
 	ui->setupUi(this);
+	ui->dateEdit->setDateTime(QDateTime::currentDateTime());
+	ui->dateEdit->setReadOnly(true);
 
 }
 returnwindow::~returnwindow()
-{
+{ 
 	delete ui;
 }
 

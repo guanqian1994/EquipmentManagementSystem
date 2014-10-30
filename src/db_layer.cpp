@@ -107,7 +107,7 @@ std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len)
             query.value(4).toString(),
             query.value(5).toUInt(),
             query.value(6).toUInt(),
-            query.value(7).toBool(),
+            query.value(7)=="Y"? true:false,
             query.value(8).toUInt(),
             QImage(),
             query.value(10).toString()

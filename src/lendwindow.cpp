@@ -34,5 +34,5 @@ void lendwindow::on_ok_clicked()
 }
 void lendwindow::on_exit_clicked()
 {
-
+	this->close();
 }
