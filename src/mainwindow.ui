@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>940</width>
+    <width>861</width>
     <height>526</height>
    </rect>
   </property>
@@ -18,43 +18,43 @@
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>10</y>
-      <width>741</width>
-      <height>451</height>
+      <y>60</y>
+      <width>661</width>
+      <height>391</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="all">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>10</y>
+      <x>40</x>
+      <y>50</y>
       <width>101</width>
       <height>61</height>
      </rect>
     </property>
     <property name="text">
-     <string>设备库存</string>
+     <string>设备详细信息</string>
     </property>
    </widget>
    <widget class="QPushButton" name="record">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>80</y>
+      <x>40</x>
+      <y>120</y>
       <width>101</width>
       <height>61</height>
      </rect>
     </property>
     <property name="text">
-     <string>设备记录</string>
+     <string>设备借还记录</string>
     </property>
    </widget>
    <widget class="QPushButton" name="exit">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>360</y>
+      <x>40</x>
+      <y>400</y>
       <width>101</width>
       <height>51</height>
      </rect>
@@ -66,8 +66,8 @@
    <widget class="QPushButton" name="insert">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>290</y>
+      <x>40</x>
+      <y>330</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -79,8 +79,8 @@
    <widget class="QPushButton" name="lend">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>150</y>
+      <x>40</x>
+      <y>190</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -92,8 +92,8 @@
    <widget class="QPushButton" name="return_2">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>220</y>
+      <x>40</x>
+      <y>260</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -102,13 +102,34 @@
      <string>设备归还</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>10</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>方正喵呜体</family>
+      <pointsize>24</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>设备总览</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>940</width>
+     <width>861</width>
      <height>23</height>
     </rect>
    </property>

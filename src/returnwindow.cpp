@@ -9,6 +9,7 @@ QDialog(parent),
 ui(new Ui::returnwindow)
 {
 	ui->setupUi(this);
+
 }
 returnwindow::~returnwindow()
 {
