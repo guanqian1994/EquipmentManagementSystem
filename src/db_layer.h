@@ -59,7 +59,7 @@ public:
     std::size_t getEquipmentCount() const;
     std::vector<LendRecord> getLendRecordList;
     bool lend(EquipmentData& equipment, uint receivables, QString remark = "");
-    bool refund(const EquipmentData& equipment);
+    bool refund(EquipmentData& equipment, uint receivables, QString remark = "");
 
 private:
     QSqlError checkTables();
