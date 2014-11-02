@@ -6,6 +6,7 @@
 
 #define BUFF_SIZE 24
 #define snprintf _snprintf
+#pragma execution_character_set("utf-8")
 
 namespace Ui {
 class MainWindow;
@@ -21,6 +22,7 @@ public:
 	private slots:
 	void on_all_clicked();
 	void on_record_clicked();
+	void on_manage_clicked();
 	void on_lend_clicked();
 	void on_return_clicked();
 	void on_exit_clicked();

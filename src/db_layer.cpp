@@ -49,12 +49,13 @@ Database::Database(const QString& schemaName,
      =======
      v._name = ".";
      updateEquipment(v);
-     */
+     
     
     auto lst = getEquipmentList(0, 1000);
     auto v = lst.front();
     refund(v, 9999, "wtf");
     //std::cout<< x <<std::endl;
+	*/
 }
 
 Database::~Database()

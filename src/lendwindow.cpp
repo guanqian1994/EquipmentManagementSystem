@@ -5,6 +5,8 @@
 #include "db_layer.h"
 
 #include <QtWidgets/QDatetimeedit>
+#include <stdlib.h>
+#include <stdio.h>
 
 lendwindow::lendwindow(QWidget *parent) :
 QDialog(parent),
@@ -27,8 +29,11 @@ void lendwindow::on_ok_clicked()
 	EquipmentData e;
 	e._id = id.toUInt();
 	QString price = ui->price->text();
+	char*  ch;
+	QByteArray ba = price.toLatin1();
+	ch = ba.data();
 	QString remark = "借出单位：" + ui->lineEdit->text() + "\n" + " 经手人：" + ui->lineEdit_2->text() + "\n" + "用途：" + ui->textEdit->toPlainText();
-	Database::get().lend(e, price.toUInt(), remark);
+	Database::get().lend(e, atoi(ch), remark);
 	//QMessageBox::information(this, tr("提示"), tr("chenggong"), QMessageBox::Ok);
 	//this->close();
 }

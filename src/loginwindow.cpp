@@ -4,13 +4,16 @@
 #include "mainwindow.h"
 #include "db_layer.h"
 
+
+
 loginwindow::loginwindow(QWidget *parent) :
 QDialog(parent),
 ui(new Ui::loginwindow)
 {
 	ui->setupUi(this);
 	ui->password->setEchoMode(QLineEdit::Password);
-
+	ui->user->setPlaceholderText("请输入用户名");
+	ui->password->setPlaceholderText("请输入密码");
 }
 
 loginwindow::~loginwindow()

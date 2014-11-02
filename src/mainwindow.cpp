@@ -7,6 +7,7 @@
 #include "insertwindow.h"
 #include "lendwindow.h"
 #include "allwindow.h"
+#include "managewindow.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -21,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->tableWidget->setRowCount(li.size());
 	//let the line number hidden
 	ui->tableWidget->verticalHeader()->setVisible(true);
-	list << "Name" << "Description" << "RegistDate" << "LendPrice" << "IsLend"<<"Image";
+	list << "设备名称" << "设备描述" << "登记日期" << "借出价格" << "是否借出"<<"设备图片";
 	ui->tableWidget->setHorizontalHeaderLabels(list);
 	ui->tableWidget->horizontalHeader()->setStretchLastSection(6);
 	ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//allrow
@@ -81,6 +82,11 @@ void MainWindow::on_all_clicked()
 	allwindow* all = new allwindow();
 	all->show();
 	
+}
+void MainWindow::on_manage_clicked()
+{
+	managewindow* manage = new managewindow();
+	manage->show();
 }
 void MainWindow::on_exit_clicked()
 {

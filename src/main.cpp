@@ -6,12 +6,9 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMessageBox>
 
-
 int main(int argc, char *argv[])
 {
-	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF8"));
     QApplication a(argc, argv);
-
     try {
         Database database;
         loginwindow l;

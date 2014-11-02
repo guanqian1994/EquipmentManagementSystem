@@ -1,6 +1,7 @@
 #ifndef _RETURNWINDOW_H
 #define _RETURNWINDOW_H
 
+#include <QtCore/QStringlist>
 #include <QtWidgets/QDialog>
 
 namespace Ui {
@@ -21,6 +22,7 @@ public:
 
 private:
 	Ui::returnwindow *ui;
+	QStringList list;
 };
 
 #endif 

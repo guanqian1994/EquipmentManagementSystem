@@ -1,12 +1,12 @@
-#include "allwindow.h"
-#include "ui_allwindow.h"
+#include "managewindow.h"
+#include "ui_managewindow.h"
 #include "QtWidgets/QMessagebox"
 #include "mainwindow.h"
 #include "db_layer.h"
 
-allwindow::allwindow(QWidget *parent) :
+managewindow::managewindow(QWidget *parent) :
 QDialog(parent),
-ui(new Ui::allwindow)
+ui(new Ui::managewindow)
 {
 	ui->setupUi(this);
 	ui->tableWidget->setColumnCount(11);
@@ -39,17 +39,33 @@ ui(new Ui::allwindow)
 		ui->tableWidget->setItem(i, 10, new QTableWidgetItem(a._remark));
 		i++;
 	}
+	//let the item to the edit value
+	QList<QTableWidgetItem*>items = ui->tableWidget->selectedItems();
+	int count = items.count();
+	for (int i = 0; i < count; i++)
+	{
+		int row = ui->tableWidget->row(items.at(i));
+		QTableWidgetItem* item = items.at(i);
+		QString name = item->text();
+		ui->name->setText(name);
+		
+	}
+	//ui->description->setPlaceholderText("Placeholder Text");
 }
-allwindow::~allwindow()
+managewindow::~managewindow()
 {
 	delete ui;
 }
 
-void allwindow::on_ok_clicked()
+void managewindow::on_update_clicked()
 {
 
 }
-void allwindow::on_exit_clicked()
+void managewindow::on_delete_2_clicked()
+{
+
+}
+void managewindow::on_exit_clicked()
 {
 	this->close();
 }

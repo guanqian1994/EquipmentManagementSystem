@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>学校设备管理系统</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTableWidget" name="tableWidget">
@@ -20,15 +20,15 @@
       <x>180</x>
       <y>60</y>
       <width>661</width>
-      <height>391</height>
+      <height>321</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="all">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>50</y>
+      <x>50</x>
+      <y>80</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -40,8 +40,8 @@
    <widget class="QPushButton" name="record">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>120</y>
+      <x>50</x>
+      <y>160</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -53,10 +53,10 @@
    <widget class="QPushButton" name="exit">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>400</y>
+      <x>680</x>
+      <y>390</y>
       <width>101</width>
-      <height>51</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
@@ -66,8 +66,8 @@
    <widget class="QPushButton" name="insert">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>330</y>
+      <x>540</x>
+      <y>390</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -79,8 +79,8 @@
    <widget class="QPushButton" name="lend">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>190</y>
+      <x>270</x>
+      <y>390</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -92,8 +92,8 @@
    <widget class="QPushButton" name="return_2">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>260</y>
+      <x>410</x>
+      <y>390</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -121,6 +121,19 @@
     </property>
     <property name="text">
      <string>设备总览</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="manage">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>250</y>
+      <width>101</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>设备管理</string>
     </property>
    </widget>
   </widget>

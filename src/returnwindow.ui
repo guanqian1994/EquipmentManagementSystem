@@ -153,7 +153,7 @@
      <rect>
       <x>300</x>
       <y>390</y>
-      <width>361</width>
+      <width>381</width>
       <height>16</height>
      </rect>
     </property>
@@ -213,22 +213,5 @@
   </widget>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>ok</sender>
-   <signal>clicked()</signal>
-   <receiver>returnwindow</receiver>
-   <slot>deleteLater()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>470</x>
-     <y>50</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>256</x>
-     <y>118</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
