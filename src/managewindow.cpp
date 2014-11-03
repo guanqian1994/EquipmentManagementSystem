@@ -19,7 +19,7 @@ ui(new Ui::managewindow)
 	auto li = Database::get().getEquipmentList(0, 1000);
 	ui->tableWidget->setRowCount(li.size());
 	int i = 0;
-
+	
 	for (auto& a : li)
 	{
 		//buff to zifuzhuanhuan
@@ -41,16 +41,11 @@ ui(new Ui::managewindow)
 	}
 	//let the item to the edit value
 	QList<QTableWidgetItem*>items = ui->tableWidget->selectedItems();
+	
+	QString names = items.at(0)->text();;
 	int count = items.count();
-	for (int i = 0; i < count; i++)
-	{
-		int row = ui->tableWidget->row(items.at(i));
-		QTableWidgetItem* item = items.at(i);
-		QString name = item->text();
-		ui->name->setText(name);
-		
-	}
-	//ui->description->setPlaceholderText("Placeholder Text");
+	
+	ui->name->setText(names);
 }
 managewindow::~managewindow()
 {
@@ -59,7 +54,15 @@ managewindow::~managewindow()
 
 void managewindow::on_update_clicked()
 {
-
+	QString name=ui->name->text();
+	QString description=ui->description->text();
+	QString people=ui->people->text();
+	QString value = ui->value->text();
+	QString price = ui->price->text();
+	QString remark = ui->price->text();
+	QDateTime time = ui->dateEdit->dateTime();
+	EquipmentData e{0,name,description,time,people,value,price,,}
+	//Database::get().updateEquipment();
 }
 void managewindow::on_delete_2_clicked()
 {
