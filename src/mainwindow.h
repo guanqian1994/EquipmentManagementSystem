@@ -5,7 +5,7 @@
 #include <QtCore/Qstringlist>
 
 #define BUFF_SIZE 24
-#define snprintf _snprintf
+
 #pragma execution_character_set("utf-8")
 
 namespace Ui {
@@ -32,8 +32,6 @@ private:
     Ui::MainWindow *ui;
 	QStringList list;
     char _buff[BUFF_SIZE];
-	char _buff2[BUFF_SIZE];
-	char _buff3[BUFF_SIZE];
 };
 
 #endif // MAINWINDOW_H

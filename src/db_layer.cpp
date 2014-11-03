@@ -210,6 +210,14 @@ bool Database::registration(const EquipmentData& equipment)
     return true;
 }
 
+std::vector<LendRecord> Database::getLendRecordList(bool islend, uint yearWithin, uint monthWithin, uint dayWithin)
+{
+    if (_currentUser.isEmpty())
+        return {};
+    
+    return {};
+}
+
 bool Database::lend(EquipmentData& equipment, uint receivables, QString remark)
 {
     if (_currentUser.isEmpty())

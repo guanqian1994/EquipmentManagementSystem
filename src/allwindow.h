@@ -2,7 +2,6 @@
 #define _ALLWINDOW_H
 
 #define BUFF_SIZE 24
-#define snprintf _snprintf
 
 #include <QtWidgets/QDialog>
 
