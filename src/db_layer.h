@@ -12,6 +12,8 @@
 #include <QtGui/QImage>
 #include "singleton.h"
 
+#define SNPRINTF std::snprintf
+
 /// 设备信息
 struct EquipmentData
 {
@@ -57,7 +59,7 @@ public:
     bool updateEquipment(const EquipmentData& equipment);
     bool registration(const EquipmentData& equipment);
     std::size_t getEquipmentCount() const;
-    std::vector<LendRecord> getLendRecordList;
+    std::vector<LendRecord> getLendRecordList(bool islend, uint yearWithin, uint monthWithin, uint dayWithin);
     bool lend(EquipmentData& equipment, uint receivables, QString remark = "");
     bool refund(EquipmentData& equipment, uint receivables, QString remark = "");
 

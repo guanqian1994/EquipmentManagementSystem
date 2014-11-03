@@ -32,11 +32,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	int i = 0;
 	for (auto& a : li)
 	{
-		snprintf(_buff3, BUFF_SIZE, "%d", a._lendPrice);
+        SNPRINTF(_buff, BUFF_SIZE, "%d", a._lendPrice);
 		ui->tableWidget->setItem(i, 0, new QTableWidgetItem(a._name));
 		ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._description));
 		ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._registrationDate));
-		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QString((const char*)_buff3)));
+		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QString((const char*)_buff)));
 		ui->tableWidget->setItem(i, 4, new QTableWidgetItem(a._isLending ? "Y" : "N"));
 		ui->tableWidget->setItem(i, 5, new QTableWidgetItem(QIcon(""), ""));
 		i++;
