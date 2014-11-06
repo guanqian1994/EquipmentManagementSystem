@@ -42,7 +42,7 @@ ui(new Ui::managewindow)
 	//let the item to the edit value
 	QList<QTableWidgetItem*>items = ui->tableWidget->selectedItems();
 	
-	QString names = items.at(0)->text();;
+	QString names = items.at(0)->text();
 	int count = items.count();
 	
 	ui->name->setText(names);
@@ -61,7 +61,7 @@ void managewindow::on_update_clicked()
 	QString price = ui->price->text();
 	QString remark = ui->price->text();
 	QDateTime time = ui->dateEdit->dateTime();
-	EquipmentData e{0,name,description,time,people,value,price,,}
+	//EquipmentData e{0,name,description,time,people,value,price}
 	//Database::get().updateEquipment();
 }
 void managewindow::on_delete_2_clicked()
