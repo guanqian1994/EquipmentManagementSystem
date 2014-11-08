@@ -23,15 +23,15 @@ ui(new Ui::managewindow)
 	for (auto& a : li)
 	{
 		//buff to zifuzhuanhuan
-		SNPRINTF(_buff, BUFF_SIZE, "%d", a._id);
+		snprintf(_buff, BUFF_SIZE, "%d", a._id);
 		ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString((const char*)_buff)));
 		ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._name));
 		ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._description));
 		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(a._registrationDate));
 		ui->tableWidget->setItem(i, 4, new QTableWidgetItem(a._registrationOperator));
-        SNPRINTF(_buff, BUFF_SIZE, "%d", a._value);
+		snprintf(_buff, BUFF_SIZE, "%d", a._value);
 		ui->tableWidget->setItem(i, 5, new QTableWidgetItem(QString((const char*)_buff)));
-        SNPRINTF(_buff, BUFF_SIZE, "%d", a._lendPrice);
+		snprintf(_buff, BUFF_SIZE, "%d", a._lendPrice);
 		ui->tableWidget->setItem(i, 6, new QTableWidgetItem(QString((const char*)_buff)));
 		ui->tableWidget->setItem(i, 7, new QTableWidgetItem(a._isLending ? "Y" : "N"));
 		ui->tableWidget->setItem(i, 8, new QTableWidgetItem(a._recentLendRecord));
@@ -39,13 +39,10 @@ ui(new Ui::managewindow)
 		ui->tableWidget->setItem(i, 10, new QTableWidgetItem(a._remark));
 		i++;
 	}
-	//let the item to the edit value
-	QList<QTableWidgetItem*>items = ui->tableWidget->selectedItems();
-	
-	QString names = items.at(0)->text();
-	int count = items.count();
-	
-	ui->name->setText(names);
+	connect(ui->tableWidget, SIGNAL(itemClicked(QTableWidgetItem *)), this, SLOT(slotItemclicked()));
+	ui->dateEdit->setDate(QDate::currentDate());
+	ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+	ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 managewindow::~managewindow()
 {
@@ -59,16 +56,47 @@ void managewindow::on_update_clicked()
 	QString people=ui->people->text();
 	QString value = ui->value->text();
 	QString price = ui->price->text();
-	QString remark = ui->price->text();
-	QDateTime time = ui->dateEdit->dateTime();
-	//EquipmentData e{0,name,description,time,people,value,price}
-	//Database::get().updateEquipment();
+	QString remark = ui->remark->toPlainText();
+	QString time = ui->dateEdit->text();
+	QString Id = ui->spinBox->text();
+	//snprintf(_buff, BUFF_SIZE, Id);
+	EquipmentData e{ Id.toUInt(), name, description, time, people, value.toUInt(), price.toUInt(),0,0, QImage(),remark };
+	Database::get().updateEquipment(e);
 }
 void managewindow::on_delete_2_clicked()
 {
-
+	QString id = ui->spinBox->text();
+	Database::get().deleteEquipment(id.toUInt());
 }
 void managewindow::on_exit_clicked()
 {
 	this->close();
+}
+void managewindow::slotItemclicked()
+{
+	QList<QTableWidgetItem*>items = ui->tableWidget->selectedItems();
+	items = ui->tableWidget->selectedItems();
+	QString _id = items.at(0)->text();
+	QString _name = items.at(1)->text();
+	QString _description = items.at(2)->text();
+	QString _registrationOperator = items.at(4)->text();
+	QString _value = items.at(5)->text();
+	QString _lendPrice = items.at(6)->text();
+	QString _rem = items.at(9)->text();
+	ui->spinBox->setValue(_id.toUInt());
+	ui->name->setText(_name);
+	ui->description->setText(_description);
+	ui->people->setText(_registrationOperator);
+	ui->value->setText(_value);
+	ui->price->setText(_lendPrice);
+	ui->remark->setPlainText(_rem);
+	//QList<QTableWidgetItem*>items = ui->tableWidget->selectedItems();
+	//int count = items.count();
+	//for (int i = 0; i < count; i++)
+	//{
+	//	int row = ui->tableWidget->row(items.at(i));
+	//	QTableWidgetItem* item = items.at(i);
+	//	QString name = item->text();
+	//	ui->id->setText(name);
+	//}
 }

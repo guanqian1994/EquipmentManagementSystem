@@ -1,5 +1,5 @@
-#include "returnwindow.h"
-#include "ui_returnwindow.h"
+#include "recentwindow.h"
+#include "ui_recentwindow.h"
 
 #include "QtWidgets/QMessagebox"
 #include "mainwindow.h"
@@ -8,14 +8,14 @@
 #include "QtWidgets/QTablewidget"
 
 
-returnwindow::returnwindow(QWidget *parent) :
+recentwindow::recentwindow(QWidget *parent) :
 QDialog(parent),
-ui(new Ui::returnwindow)
+ui(new Ui::recentwindow)
 {
 	ui->setupUi(this);
-	
+
 	ui->tableWidget->setColumnCount(7);
-	list << "id" << "设备Id" << "是否借出" << "操作人员" << "时间"<<"收款"<<"备注";
+	list << "id" << "璁惧Id" << "鏄惁鍊熷嚭" << "鎿嶄綔浜哄憳" << "鏃堕棿" << "鏀舵" << "澶囨敞";
 	ui->tableWidget->setHorizontalHeaderLabels(list);
 	//ui->tableWidget->setColumnCount(8);
 	//ui->tableWidget->setRowCount();//hang
@@ -31,28 +31,17 @@ ui(new Ui::returnwindow)
 	//	QString name = item->text();
 	//	ui->id->setText(name);
 	//}
-	ui->dateEdit->setDateTime(QDateTime::currentDateTime());
-	ui->dateEdit->setReadOnly(true);
 }
-returnwindow::~returnwindow()
-{ 
+recentwindow::~recentwindow()
+{
 	delete ui;
 }
 
-void returnwindow::on_ok_clicked()
+void recentwindow::on_ok_clicked()
 {
-	QString id = ui->id->text();
-	QString money = ui->money->text();
-	QString remark = "People:" + ui->lineEdit->text() + "," + "Remark:" + ui->textEdit->toPlainText();
-	EquipmentData e;
-	e._id = id.toUInt();
-	//change type
-	char*  ch;
-	QByteArray ba = money.toLatin1();
-	ch = ba.data();
-	Database::get().refund(e, atoi(ch), remark);
+	
 }
-void returnwindow::on_exit_clicked()
+void recentwindow::on_exit_clicked()
 {
 	this->close();
 }

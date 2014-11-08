@@ -14,6 +14,7 @@ SET(DO_MOC_HEADER_LIST
 	insertwindow.h
 	allwindow.h
 	managewindow.h
+	recentwindow.h
 )
 
 SET(DO_UIC_LIST
@@ -24,6 +25,7 @@ SET(DO_UIC_LIST
 	insertwindow.ui
 	allwindow.ui
 	managewindow.ui
+	recentwindow.ui
 )
 
 SET(MOC_OUT_LIST)
@@ -67,6 +69,8 @@ SET(WINDOW_SRC_LIST
 	allwindow.cpp
 	managewindow.h
 	managewindow.cpp
+	recentwindow.h
+	recentwindow.cpp
 
 	${DO_UIC_LIST}
 )

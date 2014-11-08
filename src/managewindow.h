@@ -2,6 +2,7 @@
 #define _MANAGEWINDOW_H
 
 #define BUFF_SIZE 24
+#define snprintf _snprintf
 
 #include <QtWidgets/QDialog>
 #include "QtCore/QList"
@@ -23,6 +24,7 @@ public:
 	void on_update_clicked();
 	void on_delete_2_clicked();
 	void on_exit_clicked();
+	void slotItemclicked();
 
 private:
 	Ui::managewindow *ui;

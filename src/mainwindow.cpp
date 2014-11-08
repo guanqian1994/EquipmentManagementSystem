@@ -8,6 +8,7 @@
 #include "lendwindow.h"
 #include "allwindow.h"
 #include "managewindow.h"
+#include "returnwindow.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -15,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-	
+	connect(ui->tableWidget, SIGNAL(itemDoubleClicked(QTableWidgetItem*)), this, SLOT(doubleclicked()));
 	//TableWiget
 	ui->tableWidget->setColumnCount(6);
 	auto li = Database::get().getEquipmentList(0, 1000);
@@ -24,15 +25,15 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->tableWidget->verticalHeader()->setVisible(true);
 	list << "设备名称" << "设备描述" << "登记日期" << "借出价格" << "是否借出"<<"设备图片";
 	ui->tableWidget->setHorizontalHeaderLabels(list);
-	ui->tableWidget->horizontalHeader()->setStretchLastSection(6);
+	//ui->tableWidget->horizontalHeader()->setStretchLastSection(6);
 	ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//allrow
 	ui->tableWidget->setMouseTracking(true);//open the mouse track
-	ui->tableWidget->setStyleSheet("selection-background-color:pink");//set the color
+	//ui->tableWidget->setStyleSheet("selection-background-color:pink");//set the color
 	ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//not allow to edit
 	int i = 0;
 	for (auto& a : li)
 	{
-        SNPRINTF(_buff, BUFF_SIZE, "%d", a._lendPrice);
+        snprintf(_buff, BUFF_SIZE, "%d", a._lendPrice);
 		ui->tableWidget->setItem(i, 0, new QTableWidgetItem(a._name));
 		ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._description));
 		ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._registrationDate));
@@ -101,14 +102,18 @@ void MainWindow::on_record_clicked()
 {
 
 }
-void MainWindow::on_return_clicked()
+void MainWindow::on_return_2_clicked()
 {
-
+	returnwindow *ret = new returnwindow();
+	ret->show();
 }
 void MainWindow::on_insert_clicked()
 {
 	insertwindow *insert = new insertwindow();
 	insert->show();
 }
-
-
+void MainWindow::doubleclicked()
+{
+	allwindow *a = new allwindow();
+	a->show();
+}

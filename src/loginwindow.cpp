@@ -14,6 +14,8 @@ ui(new Ui::loginwindow)
 	ui->password->setEchoMode(QLineEdit::Password);
 	ui->user->setPlaceholderText("请输入用户名");
 	ui->password->setPlaceholderText("请输入密码");
+	ui->user->setText("admin");
+	ui->password->setText("123456");
 }
 
 loginwindow::~loginwindow()

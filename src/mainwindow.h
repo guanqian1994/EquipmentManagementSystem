@@ -24,9 +24,10 @@ public:
 	void on_record_clicked();
 	void on_manage_clicked();
 	void on_lend_clicked();
-	void on_return_clicked();
+	void on_return_2_clicked();
 	void on_exit_clicked();
 	void on_insert_clicked();
+	void doubleclicked();
 
 private:
     Ui::MainWindow *ui;
