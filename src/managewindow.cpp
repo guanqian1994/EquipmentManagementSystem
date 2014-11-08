@@ -29,9 +29,9 @@ ui(new Ui::managewindow)
 		ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._description));
 		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(a._registrationDate));
 		ui->tableWidget->setItem(i, 4, new QTableWidgetItem(a._registrationOperator));
-		snprintf(_buff, BUFF_SIZE, "%d", a._value);
+		snprintf(_buff, BUFF_SIZE, "%f", a._value);
 		ui->tableWidget->setItem(i, 5, new QTableWidgetItem(QString((const char*)_buff)));
-		snprintf(_buff, BUFF_SIZE, "%d", a._lendPrice);
+		snprintf(_buff, BUFF_SIZE, "%f", a._lendPrice);
 		ui->tableWidget->setItem(i, 6, new QTableWidgetItem(QString((const char*)_buff)));
 		ui->tableWidget->setItem(i, 7, new QTableWidgetItem(a._isLending ? "Y" : "N"));
 		ui->tableWidget->setItem(i, 8, new QTableWidgetItem(a._recentLendRecord));
@@ -60,7 +60,7 @@ void managewindow::on_update_clicked()
 	QString time = ui->dateEdit->text();
 	QString Id = ui->spinBox->text();
 	//snprintf(_buff, BUFF_SIZE, Id);
-	EquipmentData e{ Id.toUInt(), name, description, time, people, value.toUInt(), price.toUInt(),0,0, QImage(),remark };
+	EquipmentData e{ Id.toUInt(), name, description, time, people, value.toFloat(), price.toFloat(), 0, 0, QImage(), remark };
 	Database::get().updateEquipment(e);
 }
 void managewindow::on_delete_2_clicked()

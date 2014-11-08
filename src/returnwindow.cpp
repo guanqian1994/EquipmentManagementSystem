@@ -21,6 +21,27 @@ ui(new Ui::returnwindow)
 	//ui->tableWidget->setRowCount();//hang
 	ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//row seleted
 	ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//not allow to edit
+	ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//row seleted
+	ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//not allow to edit
+	LendRecord l;
+	auto li = Database::get().getLendRecordList(Database::STATE_ALL, nullptr, nullptr);
+	ui->tableWidget->setRowCount(li.size());
+	ui->tableWidget->setColumnWidth(6, 200);
+	int i = 0;
+	for (auto& a : li)
+	{
+		SNPRINTF(_buff, BUFF_SIZE, "%d", a._id);
+		ui->tableWidget->setItem(i, 0, new QTableWidgetItem(_buff));
+		SNPRINTF(_buff, BUFF_SIZE, "%d", a._equipment_id);
+		ui->tableWidget->setItem(i, 1, new QTableWidgetItem(_buff));
+		ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._isLend ? "Y" : "N"));
+		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(a._operator));
+		ui->tableWidget->setItem(i, 4, new QTableWidgetItem(a._date));
+		SNPRINTF(_buff, BUFF_SIZE, "%.2f", a._receivables);
+		ui->tableWidget->setItem(i, 5, new QTableWidgetItem(QString((const char*)_buff)));
+		ui->tableWidget->setItem(i, 6, new QTableWidgetItem(a._remark));
+		i++;
+	}
 	////let the item to the edit value
 	//QList<QTableWidgetItem*>items = ui->tableWidget->selectedItems();
 	//int count = items.count();
@@ -50,7 +71,7 @@ void returnwindow::on_ok_clicked()
 	char*  ch;
 	QByteArray ba = money.toLatin1();
 	ch = ba.data();
-	Database::get().refund(e, atoi(ch), remark);
+	Database::get().refund(e, atof(ch), remark);
 }
 void returnwindow::on_exit_clicked()
 {

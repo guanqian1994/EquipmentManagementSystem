@@ -2,6 +2,7 @@
 #define _INSERTWINDOW_H
 
 #include <QtWidgets/QDialog>
+#include "db_layer.h"
 
 namespace Ui {
 	class insertwindow;
@@ -22,6 +23,7 @@ public:
 
 private:
 	Ui::insertwindow *ui;
+	EquipmentData e;
 };
 
 #endif 

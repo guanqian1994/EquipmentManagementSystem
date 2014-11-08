@@ -2,6 +2,7 @@
 
 #include <cstdio>
 #include <QtCore/Qtextcodec>
+#include <QtWidgets/QMessagebox>
 #include "ui_mainwindow.h"
 #include "db_layer.h"
 #include "insertwindow.h"
@@ -9,6 +10,7 @@
 #include "allwindow.h"
 #include "managewindow.h"
 #include "returnwindow.h"
+#include "recentwindow.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -22,10 +24,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	auto li = Database::get().getEquipmentList(0, 1000);
 	ui->tableWidget->setRowCount(li.size());
 	//let the line number hidden
-	ui->tableWidget->verticalHeader()->setVisible(true);
-	list << "设备名称" << "设备描述" << "登记日期" << "借出价格" << "是否借出"<<"设备图片";
+	ui->tableWidget->verticalHeader()->setVisible(false);
+	list <<"Id" << "设备名称" << "设备描述" << "登记日期" << "借出价格" << "是否借出";
 	ui->tableWidget->setHorizontalHeaderLabels(list);
-	//ui->tableWidget->horizontalHeader()->setStretchLastSection(6);
+	ui->tableWidget->horizontalHeader()->setStretchLastSection(6);
 	ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//allrow
 	ui->tableWidget->setMouseTracking(true);//open the mouse track
 	//ui->tableWidget->setStyleSheet("selection-background-color:pink");//set the color
@@ -33,13 +35,14 @@ MainWindow::MainWindow(QWidget *parent) :
 	int i = 0;
 	for (auto& a : li)
 	{
-        snprintf(_buff, BUFF_SIZE, "%d", a._lendPrice);
-		ui->tableWidget->setItem(i, 0, new QTableWidgetItem(a._name));
-		ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._description));
-		ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._registrationDate));
-		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QString((const char*)_buff)));
-		ui->tableWidget->setItem(i, 4, new QTableWidgetItem(a._isLending ? "Y" : "N"));
-		ui->tableWidget->setItem(i, 5, new QTableWidgetItem(QIcon(""), ""));
+		snprintf(_buff, BUFF_SIZE, "%d", a._id);
+		ui->tableWidget->setItem(i, 0, new QTableWidgetItem(_buff));
+		ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._name));
+		ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._description));
+		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(a._registrationDate));
+		snprintf(_buff, BUFF_SIZE, "%.2f", a._lendPrice);
+		ui->tableWidget->setItem(i, 4, new QTableWidgetItem(_buff));
+		ui->tableWidget->setItem(i, 5, new QTableWidgetItem(a._isLending ? "Y" : "N"));
 		i++;
 	}
 	/*
@@ -100,7 +103,8 @@ void MainWindow::on_lend_clicked()
 }
 void MainWindow::on_record_clicked()
 {
-
+	recentwindow *re = new recentwindow();
+	re->show();
 }
 void MainWindow::on_return_2_clicked()
 {
@@ -114,6 +118,22 @@ void MainWindow::on_insert_clicked()
 }
 void MainWindow::doubleclicked()
 {
-	allwindow *a = new allwindow();
-	a->show();
+	QList<QTableWidgetItem*>items = ui->tableWidget->selectedItems();
+	items = ui->tableWidget->selectedItems();
+	QString id = items.at(0)->text();
+	auto li=Database::get().getEquipmentList(0, 1000, Database::STATE_ALL);
+	for (auto &a : li)
+	{
+		if (a._id == id.toUInt())
+		{
+			allwindow *all = new allwindow();
+			all->sendValue(a);
+			all->show();
+		}
+	}
+	//QMessageBox::information(this, tr("提示"), a, QMessageBox::Ok);
+	
+	//all->setTextEditData(a);
+	
+	
 }

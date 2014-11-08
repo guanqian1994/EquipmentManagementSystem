@@ -4,6 +4,8 @@
 #include <QtCore/QStringlist>
 #include <QtWidgets/QDialog>
 
+#define BUFF_SIZE 24
+
 namespace Ui {
 	class recentwindow;
 }
@@ -23,6 +25,7 @@ public:
 private:
 	Ui::recentwindow *ui;
 	QStringList list;
+	char _buff[BUFF_SIZE];
 };
 
 #endif 

@@ -219,7 +219,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="openfile">
@@ -240,12 +240,12 @@
      <rect>
       <x>200</x>
       <y>140</y>
-      <width>54</width>
+      <width>61</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>.００($)</string>
+     <string>￥(人民币)</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_10">
@@ -253,12 +253,12 @@
      <rect>
       <x>450</x>
       <y>140</y>
-      <width>54</width>
+      <width>61</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>.００($)</string>
+     <string>￥(人民币)</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_11">

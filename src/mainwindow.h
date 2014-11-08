@@ -29,10 +29,12 @@ public:
 	void on_insert_clicked();
 	void doubleclicked();
 
+
 private:
     Ui::MainWindow *ui;
 	QStringList list;
     char _buff[BUFF_SIZE];
+	
 };
 
 #endif // MAINWINDOW_H

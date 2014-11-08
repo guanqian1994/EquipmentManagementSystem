@@ -3,7 +3,7 @@
 
 #include <QtCore/QStringlist>
 #include <QtWidgets/QDialog>
-
+#define BUFF_SIZE 24
 namespace Ui {
 	class returnwindow;
 }
@@ -23,6 +23,7 @@ public:
 private:
 	Ui::returnwindow *ui;
 	QStringList list;
+	char _buff[BUFF_SIZE];
 };
 
 #endif 
