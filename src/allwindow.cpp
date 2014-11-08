@@ -78,7 +78,7 @@ void allwindow::sendValue(EquipmentData& equipment)
 	ui->price->setText(_buff);
 	
 	ui->pic->setPixmap(QPixmap::fromImage(equipment._image));
-	ui->pic->setVisible(false);
+	ui->pic->setVisible(true);
 	ui->islend->setText(equipment._isLending?"½è³öÖÐ":"ÉÐÎ´½è³ö");
 	ui->remark->setText(equipment._remark);
 }

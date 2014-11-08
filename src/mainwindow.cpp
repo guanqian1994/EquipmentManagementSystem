@@ -121,16 +121,14 @@ void MainWindow::doubleclicked()
 	QList<QTableWidgetItem*>items = ui->tableWidget->selectedItems();
 	items = ui->tableWidget->selectedItems();
 	QString id = items.at(0)->text();
-	auto li=Database::get().getEquipmentList(0, 1000, Database::STATE_ALL);
-	for (auto &a : li)
-	{
-		if (a._id == id.toUInt())
-		{
-			allwindow *all = new allwindow();
-			all->sendValue(a);
-			all->show();
-		}
-	}
+    auto li = Database::get().getEquipmentList(id.toUInt() - 1, 1, Database::STATE_ALL);
+
+    if (li.size() && li.front()._id == id.toUInt())
+    {
+        allwindow *all = new allwindow();
+        all->sendValue(li.front());
+        all->show();
+    }
 	//QMessageBox::information(this, tr("ÌבÊ¾"), a, QMessageBox::Ok);
 	
 	//all->setTextEditData(a);

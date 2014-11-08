@@ -128,9 +128,10 @@ std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len, EQUIPM
             query.value(6).toFloat(),
             query.value(7) == "Y" ? true:false,
             query.value(8).toUInt(),
-            QImage(query.value(9).toByteArray()),
+            QImage(),
             query.value(10).toString()
         };
+        d._image.loadFromData(query.value(9).toByteArray());
         result.push_back(d);
     }
     
