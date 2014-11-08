@@ -3,6 +3,7 @@
 #include <ctime>
 #include <exception>
 #include <QtWidgets/QMessageBox>
+#include <QtCore/QBuffer>
 
 //#define PRINTERROR(exp, error) if(!exp) { std::cout<<error.text().toStdString()<<std::endl; }
 #define PRINTERROR(exp, text) if(!exp) { QMessageBox::information(NULL, "Error", text, QMessageBox::Yes, QMessageBox::Yes); }
@@ -32,33 +33,15 @@ Database::Database(const QString& schemaName,
         throw std::logic_error(error.text().toStdString());
     }
     
+    
     /*
-     //≤‚ ‘
      registration(
      {0, "name",
      "description",
      "",
      "registrationOperator",
      0, 0, false, 0, QImage(), "" });
-     
-     auto lst = getEquipmentList(0, 1000);
-     auto v = lst.front();
-     <<<<<<< HEAD
-     
-     lend(v, 1000);
-     =======
-     v._name = ".";
-     updateEquipment(v);
-     
-    
-    
-    auto v = lst.front();
-    refund(v, 9999, "wtf");
-    //std::cout<< x <<std::endl;
-	*/
-    
-    auto lst = this->getLendRecordList(STATE_LENDING, "2014-10-30");
-
+*/
 }
 
 Database::~Database()
@@ -86,10 +69,10 @@ bool Database::login(const QString& user, const QString& password)
     return false;
 }
 
-void Database::deleteEquipment(uint _id)
+bool Database::deleteEquipment(uint _id)
 {
     if (_currentUser.isEmpty())
-        return;
+        return false;
     
     QSqlQuery query(_database);
     
@@ -100,7 +83,9 @@ void Database::deleteEquipment(uint _id)
     query.addBindValue(_id);
     query.addBindValue(_id);
 
-    PRINTERROR(query.exec(), query.lastError().text());
+    //PRINTERROR(query.exec(), query.lastError().text());
+
+    return query.exec();
 }
 
 std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len, EQUIPMENT_STATE state)
@@ -139,11 +124,11 @@ std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len, EQUIPM
             query.value(2).toString(),
             query.value(3).toString(),
             query.value(4).toString(),
-            query.value(5).toUInt(),
-            query.value(6).toUInt(),
-            query.value(7)=="Y"? true:false,
+            query.value(5).toFloat(),
+            query.value(6).toFloat(),
+            query.value(7) == "Y" ? true:false,
             query.value(8).toUInt(),
-            QImage(),
+            QImage(query.value(9).toByteArray()),
             query.value(10).toString()
         };
         result.push_back(d);
@@ -180,7 +165,12 @@ bool Database::updateEquipment(const EquipmentData& equipment)
     query.addBindValue(equipment._lendPrice);
     query.addBindValue(equipment._isLending ? "Y" : "N");
     query.addBindValue(equipment._recentLendRecord);
-    query.addBindValue(QByteArray());
+    // save img
+    QByteArray ba;
+    QBuffer buffer(&ba);
+    buffer.open(QIODevice::WriteOnly);
+    equipment._image.save(&buffer, "JPG"); // writes image into ba in PNG format
+    query.addBindValue(ba);
     query.addBindValue(equipment._remark);
     query.addBindValue(equipment._id);
     
@@ -235,12 +225,17 @@ bool Database::registration(const EquipmentData& equipment)
     query.addBindValue(equipment._lendPrice);
     query.addBindValue(equipment._isLending ? "Y" : "N");
     query.addBindValue(equipment._recentLendRecord);
-    query.addBindValue(QByteArray());
+    // save img
+    QByteArray ba;
+    QBuffer buffer(&ba);
+    buffer.open(QIODevice::WriteOnly);
+    equipment._image.save(&buffer, "JPG"); // writes image into ba in PNG format
+    query.addBindValue(ba);
     query.addBindValue(equipment._remark);
     
-    PRINTERROR(query.exec(), query.lastError().text());
+    //PRINTERROR(query.exec(), query.lastError().text());
     
-    return true;
+    return query.exec();
 }
 
 std::vector<LendRecord> Database::getLendRecordList(EQUIPMENT_STATE state, const QString& from, const QString& to)
@@ -297,7 +292,7 @@ std::vector<LendRecord> Database::getLendRecordList(EQUIPMENT_STATE state, const
             query.value(2) == "Y" ? true : false,
             query.value(3).toString(),
             query.value(4).toString(),
-            query.value(5).toUInt(),
+            query.value(5).toFloat(),
             query.value(6).toString(),
         };
         result.push_back(r);
@@ -452,8 +447,8 @@ QSqlError Database::checkTables()
                  description VARCHAR(128) NOT NULL,
                  registration_date DATE NOT NULL,
                  registration_operator VARCHAR(64) NOT NULL,
-                 value INT NOT NULL,
-                 lendPrice INT NOT NULL,
+                 value FLOAT NOT NULL,
+                 lendPrice FLOAT NOT NULL,
                  is_lending SET("Y", "N") NOT NULL,
                  recent_lend_record INT,
                  image LONGBLOB,
@@ -474,7 +469,7 @@ QSqlError Database::checkTables()
                      is_lend SET("Y", "N") NOT NULL,
                      operator VARCHAR(64) NOT NULL,
                      record_date DATE NOT NULL,
-                     receivables INT NOT NULL,
+                     receivables FLOAT NOT NULL,
                      remark VARCHAR(128)
                      ); ALTER TABLE t_record ADD CONSTRAINT FK_RECORD_EQUIPMENT_ID FOREIGN KEY(equipment_id) REFERENCES t_equipment(id);)"))
         {

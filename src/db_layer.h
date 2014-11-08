@@ -26,8 +26,8 @@ struct EquipmentData
     QString     _description;       /// 设备描述
     QString     _registrationDate;  /// 登记日期
     QString     _registrationOperator;/// 登记操作员（当前用户）
-    uint        _value;             /// 价值
-    uint        _lendPrice;         /// 出租价格（建议）
+    float        _value;             /// 价值
+    float        _lendPrice;         /// 出租价格（建议）
     bool        _isLending;         /// 是否正在借出状态
     uint        _recentLendRecord;  /// 最近一次借出记录
     QImage      _image;             /// 设备图片
@@ -42,7 +42,7 @@ struct LendRecord
     bool        _isLend;            /// 是否是借出的记录
     QString     _operator;          /// 登记操作员（当前用户）
     QString     _date;              /// 日期
-    uint        _receivables;       /// 收款
+    float        _receivables;       /// 收款
     QString     _remark;            /// 备注
 };
 
@@ -65,7 +65,7 @@ public:
     bool login(const QString& user, const QString& password);
     bool isLogin();
 
-    void deleteEquipment(uint _id);
+    bool deleteEquipment(uint _id);
     std::vector<EquipmentData> getEquipmentList(uint pos, uint len, EQUIPMENT_STATE state = STATE_ALL);
     bool updateEquipment(const EquipmentData& equipment);
     bool registration(const EquipmentData& equipment);
