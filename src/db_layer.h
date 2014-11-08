@@ -45,6 +45,13 @@ struct LendRecord
 class Database : public Singleton<Database>
 {
 public:
+    enum EQUIPMENT_STATE
+    {
+        STATE_ALL,
+        STATE_LENDING,
+        STATE_UNLENDING,
+    };
+    
     Database(const QString& schemaName = "sa_user",
         const QString& userName = "sa",
         const QString& password = "_sa12345678",
@@ -54,8 +61,8 @@ public:
     bool login(const QString& user, const QString& password);
     bool isLogin();
 
-    std::vector<EquipmentData> searchEquipment(const QString& name);
-    std::vector<EquipmentData> getEquipmentList(uint pos, uint len);
+    void deleteEquipment(uint _id);
+    std::vector<EquipmentData> getEquipmentList(uint pos, uint len, EQUIPMENT_STATE state = STATE_ALL);
     bool updateEquipment(const EquipmentData& equipment);
     bool registration(const EquipmentData& equipment);
     std::size_t getEquipmentCount() const;

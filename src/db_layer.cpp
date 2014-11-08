@@ -51,11 +51,15 @@ Database::Database(const QString& schemaName,
      updateEquipment(v);
      
     
-    auto lst = getEquipmentList(0, 1000);
+    
     auto v = lst.front();
     refund(v, 9999, "wtf");
     //std::cout<< x <<std::endl;
 	*/
+    
+    //auto lst = getEquipmentList(0, 1000, STATE_UNLENDING);
+    
+    //deleteEquipment(1);
 }
 
 Database::~Database()
@@ -83,7 +87,24 @@ bool Database::login(const QString& user, const QString& password)
     return false;
 }
 
-std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len)
+void Database::deleteEquipment(uint _id)
+{
+    if (_currentUser.isEmpty())
+        return;
+    
+    QSqlQuery query(_database);
+    
+    query.prepare(R"(DELETE FROM t_record WHERE equipment_id = ?;
+                  DELETE FROM t_equipment WHERE id = ?;
+                  )");
+    
+    query.addBindValue(_id);
+    query.addBindValue(_id);
+
+    PRINTERROR(query.exec(), query.lastError().text());
+}
+
+std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len, EQUIPMENT_STATE state)
 {
     if (_currentUser.isEmpty())
         return {};
@@ -92,10 +113,23 @@ std::vector<EquipmentData> Database::getEquipmentList(uint pos, uint len)
     
     QSqlQuery query(_database);
     
-    query.prepare(R"(SELECT * FROM t_equipment LIMIT ?, ?)");
+    switch (state) {
+        case STATE_ALL:
+            query.prepare(R"(SELECT * FROM t_equipment LIMIT ?, ?)");
+            break;
+        case STATE_LENDING:
+            query.prepare(R"(SELECT * FROM t_equipment WHERE is_lending='Y' LIMIT ?, ?)");
+            break;
+        case STATE_UNLENDING:
+            query.prepare(R"(SELECT * FROM t_equipment WHERE is_lending='N' LIMIT ?, ?)");
+            break;
+        default:
+            break;
+    }
     
     query.addBindValue(pos);
     query.addBindValue(len);
+    
     
     PRINTERROR(query.exec(), query.lastError().text());
     

@@ -65,7 +65,8 @@ void managewindow::on_update_clicked()
 }
 void managewindow::on_delete_2_clicked()
 {
-
+	QString id = ui->spinBox->text();
+	Database::get().deleteEquipment(id.toUInt());
 }
 void managewindow::on_exit_clicked()
 {
