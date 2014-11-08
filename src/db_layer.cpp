@@ -57,9 +57,8 @@ Database::Database(const QString& schemaName,
     //std::cout<< x <<std::endl;
 	*/
     
-    auto lst = getEquipmentList(0, 1000, STATE_UNLENDING);
-    
-    deleteEquipment(1);
+    auto lst = this->getLendRecordList(STATE_LENDING, "2014-10-30");
+
 }
 
 Database::~Database()
@@ -244,15 +243,70 @@ bool Database::registration(const EquipmentData& equipment)
     return true;
 }
 
-std::vector<LendRecord> Database::getLendRecordList(bool islend, uint yearWithin, uint monthWithin, uint dayWithin)
+std::vector<LendRecord> Database::getLendRecordList(EQUIPMENT_STATE state, const QString& from, const QString& to)
 {
     if (_currentUser.isEmpty())
         return {};
     
-    return {};
+    QSqlQuery query(_database);
+
+    switch (state) {
+    case STATE_ALL:
+        query.prepare(R"(SELECT * FROM t_record WHERE record_date >= ? AND record_date <= ?;)");
+        break;
+    case STATE_LENDING:
+        query.prepare(R"(SELECT * FROM t_record WHERE is_lend='Y' AND record_date >= ? AND record_date <= ?;)");
+        break;
+    case STATE_UNLENDING:
+        query.prepare(R"(SELECT * FROM t_record WHERE is_lend='N' AND record_date >= ? AND record_date <= ?;)");
+        break;
+    default:
+        break;
+    }
+
+    if (from.isEmpty())
+    {
+        std::time_t t = std::time(NULL);
+        char mbstr[24];
+        std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d", std::localtime(&t));
+
+        query.addBindValue((const char*)mbstr);
+    }
+    else
+        query.addBindValue(from);
+
+    if (to.isEmpty())
+    {
+        std::time_t t = std::time(NULL);
+        char mbstr[24];
+        std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d", std::localtime(&t));
+
+        query.addBindValue((const char*)mbstr);
+    }
+    else
+        query.addBindValue(to);
+
+    PRINTERROR(query.exec(), query.lastError().text());
+
+    std::vector<LendRecord> result;
+
+    while (query.next()) {
+        LendRecord r = {
+            query.value(0).toUInt(),
+            query.value(1).toUInt(),
+            query.value(2) == "Y" ? true : false,
+            query.value(3).toString(),
+            query.value(4).toString(),
+            query.value(5).toUInt(),
+            query.value(6).toString(),
+        };
+        result.push_back(r);
+    }
+
+    return std::move(result);
 }
 
-bool Database::lend(EquipmentData& equipment, uint receivables, QString remark)
+bool Database::lend(EquipmentData& equipment, uint receivables, const QString& remark)
 {
     if (_currentUser.isEmpty())
         return false;
@@ -310,7 +364,7 @@ bool Database::lend(EquipmentData& equipment, uint receivables, QString remark)
     return true;
 }
 
-bool Database::refund(EquipmentData& equipment, uint receivables, QString remark)
+bool Database::refund(EquipmentData& equipment, uint receivables, const QString& remark)
 {
     if (_currentUser.isEmpty())
         return false;
