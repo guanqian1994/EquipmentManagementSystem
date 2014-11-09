@@ -44,10 +44,12 @@ void insertwindow::on_ok_clicked()
 	e._isLending = false;
 	e._recentLendRecord = 0;
 	e._remark = remark;
-	Database::get().registration(e);
-	//Database::get().registration({ 0, name, description, "2010-2-2", registrationOperator, value.toUInt(), lendPrice.toUInt(), false, 0, QImage(), remark });
-	//QMessageBox::information(this, tr("提示"), tr("插入成功!"), QMessageBox::Ok);
-	this->close();
+	QMessageBox msg(QMessageBox::NoIcon, tr("提示"), tr("确定采购？"), QMessageBox::Ok | QMessageBox::No, NULL);
+	if (msg.exec() == QMessageBox::Ok)
+	{
+		if (Database::get().registration(e))
+			QMessageBox::information(this, tr("提示"), tr("采购成功!"), QMessageBox::Ok);
+	}
 }
 void insertwindow::on_exit_clicked()
 {
@@ -56,7 +58,7 @@ void insertwindow::on_exit_clicked()
 void insertwindow::on_openfile_clicked()
 {
 	QString g_strCurrentDir;
-	QString strImage = QFileDialog::getOpenFileName(this, "Please Select image file", g_strCurrentDir,"Image Format(*.png *.jpg *.bmp *.gif)");
+	QString strImage = QFileDialog::getOpenFileName(this, tr("请选择一张图片"), g_strCurrentDir,"Image Format(*.png *.jpg *.bmp *.gif)");
 	if (strImage.isNull())
 	{
 	return;

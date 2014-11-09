@@ -17,9 +17,9 @@ class recentwindow : public QDialog
 public:
 	explicit recentwindow(QWidget *parent = 0);
 	~recentwindow();
-
+	void init();
 	private slots:
-	void on_ok_clicked();
+	void on_pushButton_clicked();
 	void on_exit_clicked();
 
 private:

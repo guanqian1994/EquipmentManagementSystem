@@ -3,7 +3,8 @@
 
 #include <QtCore/QStringlist>
 #include <QtWidgets/QDialog>
-#define BUFF_SIZE 24
+#include "db_layer.h"
+
 namespace Ui {
 	class returnwindow;
 }
@@ -15,15 +16,13 @@ class returnwindow : public QDialog
 public:
 	explicit returnwindow(QWidget *parent = 0);
 	~returnwindow();
-
+	std::vector<LendRecord>li = Database::get().getLendRecordList(Database::STATE_ALL, nullptr, nullptr);
 	private slots:
 	void on_ok_clicked();
 	void on_exit_clicked();
 
 private:
 	Ui::returnwindow *ui;
-	QStringList list;
-	char _buff[BUFF_SIZE];
 };
 
 #endif 

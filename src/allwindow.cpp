@@ -2,50 +2,14 @@
 #include "ui_allwindow.h"
 #include "QtWidgets/QMessagebox"
 #include "mainwindow.h"
-
+#include <QtWidgets/QFiledialog>
 
 allwindow::allwindow(QWidget *parent) :
 QDialog(parent),
 ui(new Ui::allwindow)
 {
 	ui->setupUi(this);
-	/*auto li = Database::get().getEquipmentList(0, 1000, Database::STATE_ALL);
-	for (auto &a : li)
-	{
-		if (a._id == _id)
-		{
-			ui->id->setText(id);
-		}
-
-	}*/
-	//ui->tableWidget->setColumnCount(11);
-	////let the line number hidden
-	//ui->tableWidget->verticalHeader()->setVisible(false);
-	//list << "Id" << "设备名称" << "设备描述" << "登记日期" << "登记人员" << "价值" << "租出价格" << "是否借出" << "最近借出" << "设备图片" << "备注";
-	//ui->tableWidget->setHorizontalHeaderLabels(list);
-	////ui->tableWidget->horizontalHeader()->setStretchLastSection(11);
-	//ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-	//auto li = Database::get().getEquipmentList(0, 1000);
-	//ui->tableWidget->setRowCount(li.size());
-	//int i = 0;
-	//for (auto& a : li)
-	//{
- //       SNPRINTF(_buff, BUFF_SIZE, "%d", a._id);
-	//	ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString((const char*)_buff)));
-	//	ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._name));
-	//	ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._description));
-	//	ui->tableWidget->setItem(i, 3, new QTableWidgetItem(a._registrationDate));
-	//	ui->tableWidget->setItem(i, 4, new QTableWidgetItem(a._registrationOperator));
- //       SNPRINTF(_buff, BUFF_SIZE, "%.2f", a._value);
- //       ui->tableWidget->setItem(i, 5, new QTableWidgetItem(QString((const char*)_buff)));
- //       SNPRINTF(_buff, BUFF_SIZE, "%.2f", a._lendPrice);
- //       ui->tableWidget->setItem(i, 6, new QTableWidgetItem(QString((const char*)_buff)));
-	//	ui->tableWidget->setItem(i, 7, new QTableWidgetItem(a._isLending ? "Y" : "N"));
-	//	ui->tableWidget->setItem(i, 8, new QTableWidgetItem(a._recentLendRecord));
-	//	ui->tableWidget->setItem(i, 8, new QTableWidgetItem(QIcon(""), ""));
-	//	ui->tableWidget->setItem(i, 10, new QTableWidgetItem(a._remark));
-	//	i++;
-	//}
+	
 }
 allwindow::~allwindow()
 {
@@ -54,7 +18,31 @@ allwindow::~allwindow()
 
 void allwindow::on_update_clicked()
 {
-
+	QString name = ui->name->text();
+	QString description = ui->description->text();
+	QString people = ui->people->text();
+	QString value = ui->value->text();
+	QString price = ui->price->text();
+	QString remark = ui->remark->toPlainText();
+	QString time = ui->date->text();
+	QString Id = ui->id->text();
+	e._id = Id.toUInt();
+	e._description = description;
+	e._registrationOperator = people; 
+	e._name = name;
+	e._registrationDate =time;
+	e._value = value.toFloat();
+	e._lendPrice = price.toFloat();
+	e._recentLendRecord = 0;
+	e._remark = remark;
+	//snprintf(_buff, BUFF_SIZE, Id);
+	QMessageBox msg(QMessageBox::NoIcon, tr("提示"), tr("确定修改？"), QMessageBox::Ok | QMessageBox::No, NULL);
+	if (msg.exec() == QMessageBox::Ok)
+	{
+		if (Database::get().updateEquipment(e))
+			QMessageBox::information(this, tr("提示"), tr("修改成功!"), QMessageBox::Ok);
+	}
+	
 }
 void allwindow::on_exit_clicked()
 {
@@ -62,7 +50,25 @@ void allwindow::on_exit_clicked()
 }
 void allwindow::on_delete_2_clicked()
 {
-
+	QString id = ui->id->text();
+	QMessageBox msg(QMessageBox::NoIcon, tr("提示"), tr("确定删除？"), QMessageBox::Ok | QMessageBox::No, NULL);
+	if (msg.exec() == QMessageBox::Ok)
+	{
+		if (Database::get().deleteEquipment(id.toUInt()))
+			QMessageBox::information(this, tr("提示"), tr("删除成功!"), QMessageBox::Ok);
+	}
+}
+void allwindow::on_update_pic_clicked()
+{
+	QString g_strCurrentDir;
+	QString strImage = QFileDialog::getOpenFileName(this, "Please Select image file", g_strCurrentDir, "Image Format(*.png *.jpg *.bmp *.gif)");
+	if (strImage.isNull())
+	{
+		return;
+	}
+	g_strCurrentDir = QDir(strImage).absolutePath();
+	ui->pic->setPixmap(QPixmap(strImage).scaled(ui->pic->size()));
+	e._image = QImage(strImage);
 }
 void allwindow::sendValue(EquipmentData& equipment)
 {
@@ -77,7 +83,7 @@ void allwindow::sendValue(EquipmentData& equipment)
 	snprintf(_buff, BUFF_SIZE, "%.2f", equipment._lendPrice);
 	ui->price->setText(_buff);
 	
-	ui->pic->setPixmap(QPixmap::fromImage(equipment._image));
+	ui->pic->setPixmap(QPixmap::fromImage(equipment._image).scaled(ui->pic->size()));
 	ui->pic->setVisible(true);
 	ui->islend->setText(equipment._isLending?"借出中":"尚未借出");
 	ui->remark->setText(equipment._remark);

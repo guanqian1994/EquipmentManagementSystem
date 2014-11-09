@@ -285,8 +285,8 @@
    <widget class="QPushButton" name="exit">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>300</y>
+      <x>500</x>
+      <y>330</y>
       <width>51</width>
       <height>41</height>
      </rect>
@@ -298,8 +298,8 @@
    <widget class="QPushButton" name="update">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>270</y>
+      <x>420</x>
+      <y>330</y>
       <width>51</width>
       <height>41</height>
      </rect>
@@ -319,6 +319,19 @@
     </property>
     <property name="text">
      <string>删除</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="update_pic">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>240</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>更换图片</string>
     </property>
    </widget>
   </widget>

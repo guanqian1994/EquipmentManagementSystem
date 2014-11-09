@@ -23,24 +23,11 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="ok">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>430</y>
-     <width>81</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>确定</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="exit">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>430</y>
+     <x>290</x>
+     <y>410</y>
      <width>81</width>
      <height>41</height>
     </rect>
@@ -52,8 +39,8 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>560</x>
-     <y>350</y>
+     <x>160</x>
+     <y>410</y>
      <width>81</width>
      <height>41</height>
     </rect>
@@ -97,13 +84,23 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="dateTime">
+    <datetime>
+     <hour>0</hour>
+     <minute>0</minute>
+     <second>0</second>
+     <year>2000</year>
+     <month>1</month>
+     <day>1</day>
+    </datetime>
+   </property>
    <property name="displayFormat">
     <string>yyyy-MM-dd</string>
    </property>
    <property name="date">
     <date>
      <year>2000</year>
-     <month>2</month>
+     <month>1</month>
      <day>1</day>
     </date>
    </property>

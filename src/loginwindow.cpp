@@ -29,20 +29,20 @@ void loginwindow::on_loginbtn_clicked()
 	password = ui->password->text();
 	if (user.isEmpty() || password.isEmpty())
 	{
-		QMessageBox::information(this, tr("Error"), tr("user or password is null,please write down again!"), QMessageBox::Ok);
+		QMessageBox::information(this, tr("提示"), tr("用户名或密码不能为空，请重新输入！"), QMessageBox::Ok);
 		return;
 	}
 	if (Database::get().login(user,password))
 	{
 		this->hide();
-		QMessageBox::information(this, tr("Login"), tr("Login sucessed!"), QMessageBox::Ok);
+		QMessageBox::information(this, tr("提示"), tr("登陆成功!"), QMessageBox::Ok);
 		MainWindow *w = new MainWindow();
 		w->show();
 
 	}
 	else
 	{
-		QMessageBox::information(this, tr("Login"), tr("Login failed~~"), QMessageBox::Ok);
+		QMessageBox::information(this, tr("提示"), tr("登录失败咯~~"), QMessageBox::Ok);
 		ui->user->clear();
 		ui->password->clear();
 	}

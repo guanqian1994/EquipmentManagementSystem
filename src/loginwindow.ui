@@ -55,12 +55,12 @@
     <string>重置</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>91</x>
      <y>91</y>
-     <width>81</width>
+     <width>90</width>
      <height>91</height>
     </rect>
    </property>

@@ -4,7 +4,6 @@
 #include <QtCore/Qtextcodec>
 #include <QtWidgets/QMessagebox>
 #include "ui_mainwindow.h"
-#include "db_layer.h"
 #include "insertwindow.h"
 #include "lendwindow.h"
 #include "allwindow.h"
@@ -19,62 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 	connect(ui->tableWidget, SIGNAL(itemDoubleClicked(QTableWidgetItem*)), this, SLOT(doubleclicked()));
-	//TableWiget
-	ui->tableWidget->setColumnCount(6);
-	auto li = Database::get().getEquipmentList(0, 1000);
-	ui->tableWidget->setRowCount(li.size());
-	//let the line number hidden
-	ui->tableWidget->verticalHeader()->setVisible(false);
-	list <<"Id" << "设备名称" << "设备描述" << "登记日期" << "借出价格" << "是否借出";
-	ui->tableWidget->setHorizontalHeaderLabels(list);
-	ui->tableWidget->horizontalHeader()->setStretchLastSection(6);
-	ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//allrow
-	ui->tableWidget->setMouseTracking(true);//open the mouse track
-	//ui->tableWidget->setStyleSheet("selection-background-color:pink");//set the color
-	ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//not allow to edit
-	int i = 0;
-	for (auto& a : li)
-	{
-		snprintf(_buff, BUFF_SIZE, "%d", a._id);
-		ui->tableWidget->setItem(i, 0, new QTableWidgetItem(_buff));
-		ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._name));
-		ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._description));
-		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(a._registrationDate));
-		snprintf(_buff, BUFF_SIZE, "%.2f", a._lendPrice);
-		ui->tableWidget->setItem(i, 4, new QTableWidgetItem(_buff));
-		ui->tableWidget->setItem(i, 5, new QTableWidgetItem(a._isLending ? "Y" : "N"));
-		i++;
-	}
-	/*
-	QHeaderView* hearderView = ui->tableWidget->verticalHeader();
-	hearderView->setHidden(true);
-	
-	list << "Id" << "Name" << "Description" << "RegistDate" << "RegistOperator" << "Value" << "LendPrice" << "IsLending" << "RecentLendRecord" << "Image" << "Remark";
-	ui->tableWidget->setHorizontalHeaderLabels(list);
-	ui->tableWidget->horizontalHeader()->setStretchLastSection(11);
-	ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-
-    int i = 0;
-
-	for (auto& a : li)
-	{
-		snprintf(_buff, BUFF_SIZE, "%d", a._id);
-		snprintf(_buff2, BUFF_SIZE, "%d", a._value);
-		snprintf(_buff3, BUFF_SIZE, "%d", a._lendPrice);
-		ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString((const char*)_buff)));
-		ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._name));
-		ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._description));
-		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(a._registrationDate));
-		ui->tableWidget->setItem(i, 4, new QTableWidgetItem(a._registrationOperator));
-		ui->tableWidget->setItem(i, 5, new QTableWidgetItem(QString((const char*)_buff2)));
-		ui->tableWidget->setItem(i, 6, new QTableWidgetItem(QString((const char*)_buff3)));
-		ui->tableWidget->setItem(i, 7, new QTableWidgetItem(a._isLending ? "Y" : "N"));
-		ui->tableWidget->setItem(i, 8, new QTableWidgetItem(a._recentLendRecord));
-		ui->tableWidget->setItem(i, 8, new QTableWidgetItem(QIcon(""), ""));
-		ui->tableWidget->setItem(i, 10, new QTableWidgetItem(a._remark));
-		i++;
-	}
-*/
+	init();
 }
 
 MainWindow::~MainWindow()
@@ -83,9 +27,8 @@ MainWindow::~MainWindow()
 }
 void MainWindow::on_all_clicked()
 {
-	allwindow* all = new allwindow();
-	all->show();
-	
+	ui->tableWidget->clear();
+	init();
 }
 void MainWindow::on_manage_clicked()
 {
@@ -94,7 +37,11 @@ void MainWindow::on_manage_clicked()
 }
 void MainWindow::on_exit_clicked()
 {
-	this->close();
+	QMessageBox msg(QMessageBox::NoIcon, tr("提示"), tr("确定退出？"), QMessageBox::Ok | QMessageBox::No, NULL);
+	if (msg.exec() == QMessageBox::Ok)
+	{
+		this->close();
+	}
 }
 void MainWindow::on_lend_clicked()
 {
@@ -121,17 +68,50 @@ void MainWindow::doubleclicked()
 	QList<QTableWidgetItem*>items = ui->tableWidget->selectedItems();
 	items = ui->tableWidget->selectedItems();
 	QString id = items.at(0)->text();
-    auto li = Database::get().getEquipmentList(id.toUInt() - 1, 1, Database::STATE_ALL);
-
-    if (li.size() && li.front()._id == id.toUInt())
-    {
-        allwindow *all = new allwindow();
-        all->sendValue(li.front());
-        all->show();
-    }
-	//QMessageBox::information(this, tr("提示"), a, QMessageBox::Ok);
-	
-	//all->setTextEditData(a);
-	
-	
+	auto li = Database::get().getEquipmentList(0, 1000, Database::STATE_ALL);
+	for (auto &a : li)
+	{
+		if (a._id == id.toUInt())
+		{
+			allwindow *all = new allwindow();
+			all->sendValue(a);
+			all->show();
+		}
+	}
+}
+void MainWindow::init()
+{
+	li = Database::get().getEquipmentList(0, 1000);
+	//TableWiget
+	ui->tableWidget->setColumnCount(6);
+	ui->tableWidget->setRowCount(li.size());
+	//let the line number hidden
+	ui->tableWidget->verticalHeader()->setVisible(false);
+	list << "Id" << "设备名称" << "设备描述" << "登记日期" << "借出价格" << "是否借出";
+	ui->tableWidget->setHorizontalHeaderLabels(list);
+	ui->tableWidget->horizontalHeader()->setStretchLastSection(6);
+	ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//allrow
+	ui->tableWidget->setMouseTracking(true);//open the mouse track
+	//ui->tableWidget->setStyleSheet("selection-background-color:pink");//set the color
+	ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//not allow to edit
+	int i = 0;
+	for (auto& a : li)
+	{
+		snprintf(_buff, BUFF_SIZE, "%d", a._id);
+		ui->tableWidget->setItem(i, 0, new QTableWidgetItem(_buff));
+		ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._name));
+		ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._description));
+		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(a._registrationDate));
+		snprintf(_buff, BUFF_SIZE, "%.2f", a._lendPrice);
+		ui->tableWidget->setItem(i, 4, new QTableWidgetItem(_buff));
+		ui->tableWidget->setItem(i, 5, new QTableWidgetItem(a._isLending ? "Y" : "N"));
+		i++;
+	}
+}
+void MainWindow::on_about_clicked()
+{
+	QString about = "版本：  V1.0(乞丐版)\n组员：龙晨    补子畅";
+	QMessageBox msg(QMessageBox::NoIcon, tr("关于--设备管理系统"),about);
+	msg.setIconPixmap(QPixmap("icon1.png"));
+	msg.exec();
 }

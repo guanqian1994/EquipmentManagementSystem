@@ -3,6 +3,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include <QtCore/Qstringlist>
+#include "db_layer.h"
 
 #define BUFF_SIZE 24
 
@@ -18,6 +19,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+	void init();
     ~MainWindow();
 	private slots:
 	void on_all_clicked();
@@ -28,12 +30,14 @@ public:
 	void on_exit_clicked();
 	void on_insert_clicked();
 	void doubleclicked();
+	void on_about_clicked();
 
 
 private:
     Ui::MainWindow *ui;
 	QStringList list;
     char _buff[BUFF_SIZE];
+	std::vector<EquipmentData> li;
 	
 };
 
