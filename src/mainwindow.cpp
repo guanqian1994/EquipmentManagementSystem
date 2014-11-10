@@ -97,12 +97,12 @@ void MainWindow::init()
 	int i = 0;
 	for (auto& a : li)
 	{
-		snprintf(_buff, BUFF_SIZE, "%d", a._id);
+		SNPRINTF(_buff, BUFF_SIZE, "%d", a._id);
 		ui->tableWidget->setItem(i, 0, new QTableWidgetItem(_buff));
 		ui->tableWidget->setItem(i, 1, new QTableWidgetItem(a._name));
 		ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._description));
 		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(a._registrationDate));
-		snprintf(_buff, BUFF_SIZE, "%.2f", a._lendPrice);
+		SNPRINTF(_buff, BUFF_SIZE, "%.2f", a._lendPrice);
 		ui->tableWidget->setItem(i, 4, new QTableWidgetItem(_buff));
 		ui->tableWidget->setItem(i, 5, new QTableWidgetItem(a._isLending ? "Y" : "N"));
 		i++;
