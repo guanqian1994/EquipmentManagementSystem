@@ -14,7 +14,6 @@ ui(new Ui::recentwindow)
 {
 	ui->setupUi(this);
 	ui->dateEdit_2->setDate(QDate::currentDate());
-	connect(ui->tableWidget, SIGNAL(itemClicked(QTableWidgetItem *)), this, SLOT(slotItemclicked()));
 	init();
 }
 recentwindow::~recentwindow()
@@ -31,10 +30,12 @@ void recentwindow::on_pushButton_clicked()
 	if (li.size() > 0)
 	{
 		QMessageBox::information(this, tr("提示"), tr("查询成功!"), QMessageBox::Ok);
+		ui->tableWidget->clear();
+		init();
 		int i = 0;
 		for (auto& a : li)
 		{
-			ui->tableWidget->clear();
+			
 			SNPRINTF(_buff, BUFF_SIZE, "%d", a._id);
 			ui->tableWidget->setItem(i, 0, new QTableWidgetItem(_buff));
 			SNPRINTF(_buff, BUFF_SIZE, "%d", a._equipment_id);
@@ -50,8 +51,6 @@ void recentwindow::on_pushButton_clicked()
 	}
 	else
 		QMessageBox::information(this, tr("提示"), tr("指定时间段内没有记录"), QMessageBox::Ok);
-	
-
 }
 void recentwindow::on_exit_clicked()
 {

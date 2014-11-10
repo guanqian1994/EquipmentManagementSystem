@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>lendwindow</string>
+   <string>借出界面</string>
   </property>
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
@@ -187,7 +187,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>确定采购</string>
+    <string>确定借出</string>
    </property>
   </widget>
   <widget class="QPushButton" name="exit">

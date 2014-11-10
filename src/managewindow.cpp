@@ -84,7 +84,7 @@ void managewindow::on_exit_clicked()
 void managewindow::slotItemclicked()
 {
 	QList<QTableWidgetItem*>items = ui->tableWidget->selectedItems();
-	items = ui->tableWidget->selectedItems();
+	//items = ui->tableWidget->selectedItems();
 	QString _id = items.at(0)->text();
 	QString _name = items.at(1)->text();
 	QString _description = items.at(2)->text();
@@ -121,9 +121,9 @@ void managewindow::init()
 		ui->tableWidget->setItem(i, 2, new QTableWidgetItem(a._description));
 		ui->tableWidget->setItem(i, 3, new QTableWidgetItem(a._registrationDate));
 		ui->tableWidget->setItem(i, 4, new QTableWidgetItem(a._registrationOperator));
-		snprintf(_buff, BUFF_SIZE, "%f", a._value);
+		snprintf(_buff, BUFF_SIZE, "%.2f", a._value);
 		ui->tableWidget->setItem(i, 5, new QTableWidgetItem(QString((const char*)_buff)));
-		snprintf(_buff, BUFF_SIZE, "%f", a._lendPrice);
+		snprintf(_buff, BUFF_SIZE, "%.2f", a._lendPrice);
 		ui->tableWidget->setItem(i, 6, new QTableWidgetItem(QString((const char*)_buff)));
 		ui->tableWidget->setItem(i, 7, new QTableWidgetItem(a._isLending ? "Y" : "N"));
 		ui->tableWidget->setItem(i, 8, new QTableWidgetItem(a._remark));

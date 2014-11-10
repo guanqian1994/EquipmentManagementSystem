@@ -58,7 +58,8 @@ void insertwindow::on_exit_clicked()
 void insertwindow::on_openfile_clicked()
 {
 	QString g_strCurrentDir;
-	QString strImage = QFileDialog::getOpenFileName(this, tr("请选择一张图片"), g_strCurrentDir,"Image Format(*.png *.jpg *.bmp *.gif)");
+	QString strImage = QFileDialog::getOpenFileName(this, tr("请选择一张图片"), 
+		g_strCurrentDir,"Image Format(*.png *.jpg *.bmp *.gif)");
 	if (strImage.isNull())
 	{
 	return;
