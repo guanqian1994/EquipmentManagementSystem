@@ -32,16 +32,7 @@ Database::Database(const QString& schemaName,
     {
         throw std::logic_error(error.text().toStdString());
     }
-    
-    
-    /*
-     registration(
-     {0, "name",
-     "description",
-     "",
-     "registrationOperator",
-     0, 0, false, 0, QImage(), "" });
-*/
+
 }
 
 Database::~Database()
