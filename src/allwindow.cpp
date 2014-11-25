@@ -72,15 +72,15 @@ void allwindow::on_update_pic_clicked()
 }
 void allwindow::sendValue(EquipmentData& equipment)
 {
-	snprintf(_buff, BUFF_SIZE, "%d", equipment._id);
+    SNPRINTF(_buff, BUFF_SIZE, "%d", equipment._id);
 	ui->id->setText(_buff);
 	ui->name->setText(equipment._name);
 	ui->description->setText(equipment._description);
 	ui->date->setText(equipment._registrationDate);
 	ui->people->setText(equipment._registrationOperator);
-	snprintf(_buff, BUFF_SIZE, "%.2f", equipment._value);
+    SNPRINTF(_buff, BUFF_SIZE, "%.2f", equipment._value);
 	ui->value->setText(_buff);
-	snprintf(_buff, BUFF_SIZE, "%.2f", equipment._lendPrice);
+    SNPRINTF(_buff, BUFF_SIZE, "%.2f", equipment._lendPrice);
 	ui->price->setText(_buff);
 	
 	ui->pic->setPixmap(QPixmap::fromImage(equipment._image).scaled(ui->pic->size()));

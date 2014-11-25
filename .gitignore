@@ -37,6 +37,7 @@ Icon
 .Trashes
 
 # Dirs
+build
 
 #UIC & MOC Files
 moc_*.cpp
